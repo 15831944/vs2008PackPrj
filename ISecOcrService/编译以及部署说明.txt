@@ -1,0 +1,14 @@
+编译:
+1, 该项目依赖 XabZlib.lib; boost
+
+部署说明:
+1, 该项目运行需要 openCV; podofo; ISecOcrForTess; Tesseract; gsdll32.dll;等动态库,
+	已及vs2015运行时, 这些都已经被我打包到压缩文件:runtime_x86.rar 中.
+	请把解压后的dll 与exe 放到同级目录.
+2, Tesseract 语言包需要放到 exe 的同级目录
+3, config/config.h 该目录需要放到 exe 的同级目录
+
+程序的不足:
+识别效率有待提高, 目前一张 1100 * 800 分辨率的图像, 识别时间是10 多秒,
+可以修改为采用多线程对同一张图片不同部分进行识别. 最后再组装结果, 
+开发难度增大, 但是方案可行.

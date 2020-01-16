@@ -1,0 +1,115 @@
+import "cmmmessage.proto";
+import "printermessage.proto";
+package isafetec; 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+message PrtStationQRCode    //打印站点二维码
+{
+    //站点基本信息
+    optional int32 prtStation_id       = 1;		//打印点ID
+    optional string prtStation_ip      = 2;		//打印点IP
+	optional string printer_name	   = 3;		//打印机名
+    optional int32 equip_Brand          = 4;    //打印机品牌,在前面用枚举类型定义
+    optional string equip_Type        = 5;    //打印机型号，如toshiba257,英文
+    optional int32 equip_Paper_Type      = 6;    //A3机型 or A4机型,在前面用枚举类型定义
+    optional string equip_Color_Type   = 7;    //黑白机
+    optional int32 Support_Copy        = 8;    //是否支持拷贝
+    optional int32 Support_Fax        = 9;    //是否支持传真
+}
+
+message ScanQRCodeInfo
+{
+    required   PrtStationQRCode    QR_Code           = 1;    //二维码信息
+    optional   string              scan_Time         = 2;    //扫描时间,"2015-07-03 11:20:18"
+    optional   string              scan_Dev_Type     = 3;    //被什么设备扫描,如安卓、ios
+    optional   string              scan_App_Type     = 4;    //App类型,微信，App，平板等
+    optional   string              userName         = 5;    //用户名
+    optional   string              userPwd          = 6;    //用户密码
+}
+
+message MobileUserCommand
+{
+    optional int32  cmd              = 1;    //命令
+    optional string content          = 2;    //内容
+}
+
+//二维码基本信息
+message QRCodeBaseInfo
+{
+	optional string Base_Url = 1;		//二维码URL
+	optional int32 Dynamic_Timeout = 2;	//二维码动态变化的时间(分钟).
+	optional string Factor = 3;		//二维码动态变化时的md5加密因子
+}
+
+//二维码类型
+enum QR_Code_Info_Type
+{
+	QR_Info_Type_Login	= 0;	//登录
+	QR_Info_Type_Payment = 1;	//支付
+}
+
+message PrtStationQRCodeInfo    //打印站点二维码
+{
+	required int32 PrtId = 1;	//打印点ID
+	optional int32 Enable_Login_QRCode = 2;			//启用登录二维码,0-禁用;1-启用;
+	optional int32 Enable_Payment_QRCode = 3;			//启用支付二维码,0-禁用;1-启用;
+	optional QRCodeBaseInfo Login_QRCode = 4;	//登录二维码信息
+	optional QRCodeBaseInfo Payment_QRCode = 5;	//支付二维码信息
+}
+
+//支付类型：1-微信；2-支付宝；3-网银支付支付；4-其他支付方式
+enum Pay_Type
+{
+	Pay_Type_OnCard = 0;	//一卡通支付
+	Pay_Type_WeChat = 1;	//微信
+	Pay_Type_ZhiFB = 2;		//支付宝
+	Pay_Type_NetBank = 3;	//网银支付支付
+	Pay_Type_Other = 4;		//其他支付方式
+}
+
+//订单支付状态：0-未知; 1-订单支付成功；2-待支付；3-订单被取消；4-订单支付超时；5-订单支付异常；6-订单生成失败;
+enum Pay_State
+{
+	Pay_State_UnKnow = 0;	//未知
+	Pay_State_Succ = 1;		//订单支付成功
+	Pay_State_Wait = 2;		//待支付
+	Pay_State_Cancel = 3;	//订单被取消
+	Pay_State_Timeout = 4;	//订单支付超时
+	Pay_State_Exceptional = 5;		//订单支付异常
+	Pay_State_OrderGenFail = 6;		//订单生成失败
+}
+message MobileOrderInfo
+{
+	optional int32 id = 1;				//订单ID
+	optional string OrderNo = 2;		//订单号
+	required int32 UserId = 3;		    //用户ID
+	required int32 AccountId = 4;		//帐户ID
+	optional string AccountName = 5;	//帐户名
+	optional string RealName = 6;		//帐户真实名
+	required int32 PrtId = 7;			//打印点ID
+	required int32 SpendMoney = 8;		//订单消费金额，单位（分）
+	optional Pay_Type PayType = 9;		//支付类型：0-一卡通；1-微信；2-支付宝；3-网银支付支付；4-其他支付方式
+	optional string PayAccount = 10;		//支付帐号，如微信用户ID/支付宝帐号/银行卡号/其他帐号
+	optional string PayCompany = 11;		//支付机构，如微信/支付宝/工商银行/其他支付机构
+	optional int32 PayMoney = 12;		//实际支付金额，单位（分）
+	optional int32 PayRedPacket = 13;	//实际支付使用红包，单位（分）
+	optional int32 PayPreferential = 14;	//实际支付使用优惠，单位（分）
+	optional JOB_TYPE JobType = 15;		//订单操作类型：0-未知；1-打印；2-复印；3-扫描；4-传真；（参考JOB_TYPE）
+	optional int32 JobId = 16;			//作业ID,一般只有打印作业有ID
+	optional int32 TotalPage = 17;		//作业总页数
+	optional int32 RealPage = 18;		//作业实际操作页数
+	optional int32 Color = 19;			//作业色彩：0-黑白；1-彩色；
+	optional int32 Copies = 20;			//作业份数
+	optional JOB_PRICE_TYPE PriceType = 21;	//作业费率类型
+	optional int32 Price = 22;			//实际费率，单位（分）
+	optional string PageType = 23;		//纸型:如A4，A3
+	optional int32 PaperSize = 24;		//纸型:如：9-A4；8-A3
+	optional int32 ProjectId = 25;		//作业项目ID
+	optional double CreateOn = 26;		//订单生成时间
+	optional double PayTime = 27;		//订单支付完成时间
+	optional Pay_State PayState = 28;	//订单支付状态：1-订单支付成功；2-待支付；3-订单被取消；4-订单支付超时；5-订单支付异常；
+	optional Job_Op_State JobOpState = 29;	//作业操作状态：1-作业成功；2-作业已经下单；3-作业正在进行中；4-作业取消/失败；
+	optional double JobCompleteTime = 30;	//作业完成时间
+	optional double JobCompleteNotifyTime = 31;	//作业完成后通知支付机构时间
+	optional string comment = 32;	//注释与说明
+}

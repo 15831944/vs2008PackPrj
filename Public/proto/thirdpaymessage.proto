@@ -1,0 +1,91 @@
+import "mobile.proto";
+import "printermessage.proto";
+package isafetec; 
+
+
+
+
+// 登录二维码请求信息
+message LoginQrcodeRequest
+{
+	required int32 equipid = 1;	//客户端ID
+	optional int32 qrtype = 2;	//二维码类型，微信支付宝其它
+	optional uint32 time_stamp = 3;//时间戳字符串，精确到毫秒
+}
+
+// 登录二维码回应信息
+message LoginQrcodeResponse
+{
+	required int32 equipid = 1;	//客户端ID
+	optional int32	qrtype = 2;	//二维码类型，微信支付宝其它
+	optional uint32 time_stamp = 3;//时间戳字符串，精确到毫秒
+	optional int32 errcode = 4;//错误码
+	optional string errmsg = 5;//错误信息
+	optional string qrstring = 6;//二维码字符串
+}
+
+//设备用户在线信息
+message EquipUserOnlineInfo
+{
+	required int32 equipid = 1;//客户端ID
+	required int32 userid = 2;//userid
+	optional int32 login_type = 3;//登录方式
+	optional string update_time = 4;//更新时间
+}
+
+//第三方登录打印站点或者打印客户端或者其它的终端的信息
+message ThirdPartLoginEquip
+{
+	required int32 equipid = 1;//终端ID
+	required string accountno = 2;//帐号
+	optional int32 userid = 3;//userid
+	optional int32 login_type = 4;//登录方式
+	optional string session_id = 5;//会话ID
+	optional CommonResult result = 6;
+}
+
+message CommonResult
+{
+	optional int32 errcode = 1;
+	optional string errmsg = 2;
+}
+
+message PrtStationOrderInfo
+{
+	optional int32 id = 1;				//订单ID
+	optional string OrderNo = 2;		//订单号
+	required int32 UserId = 3;		    //用户ID
+	required int32 AccountId = 4;		//帐户ID
+	optional string AccountName = 5;	//帐户名
+	optional string RealName = 6;		//帐户真实名
+	required int32 PrtId = 7;			//打印点ID
+	required int32 SpendMoney = 8;		//订单消费金额，单位（分）
+	optional Pay_Type PayType = 9;		//支付类型：0-一卡通；1-微信；2-支付宝；3-网银支付支付；4-其他支付方式
+	optional string PayAccount = 10;		//支付帐号，如微信用户ID/支付宝帐号/银行卡号/其他帐号
+	optional string PayCompany = 11;		//支付机构，如微信/支付宝/工商银行/其他支付机构
+	optional int32 PayMoney = 12;		//实际支付金额，单位（分）
+	optional int32 PayRedPacket = 13;	//实际支付使用红包，单位（分）
+	optional int32 PayPreferential = 14;	//实际支付使用优惠，单位（分）
+	optional JOB_TYPE JobType = 15;		//订单操作类型：0-未知；1-打印；2-复印；3-扫描；4-传真；（参考JOB_TYPE）
+	repeated int32 JobIdList = 16;			//作业ID集合
+	optional int32 TotalPage = 17;		//作业总页数
+	optional int32 RealPage = 18;		//作业实际操作页数
+	optional int32 Color = 19;			//作业色彩：0-黑白；1-彩色；
+	optional int32 Copies = 20;			//作业份数
+	optional double CreateOn = 21;		//订单生成时间
+	optional double PayTime = 22;		//订单支付完成时间
+	optional Pay_State PayState = 23;	//订单支付状态：1-订单支付成功；2-待支付；3-订单被取消；4-订单支付超时；5-订单支付异常；
+	optional Job_Op_State JobOpState = 24;	//作业操作状态：1-作业成功；2-作业已经下单；3-作业正在进行中；4-作业取消/失败；
+	optional double JobCompleteTime = 25;	//作业完成时间
+	optional double JobCompleteNotifyTime = 26;	//作业完成后通知支付机构时间
+	optional string PaymentUrl = 27;
+	optional string comment = 28;	//注释与说明
+	optional int32 OrgID = 29;			//组织ID
+}
+message PrtStationOrderHeader
+{
+	optional int32 SerFlag = 1;		//服务器标识
+	optional int32 Equipid = 2;		//设备ID
+}
+
+

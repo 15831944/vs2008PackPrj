@@ -1,0 +1,93 @@
+package isafetec;  
+      
+///////////////////////////////////////////////////////////////////////////////////
+//-----------------------------
+//设备基本信息
+message BaseEquipInfo
+{
+	required int32 id = 1;
+	optional string hddnum = 2;
+	optional string mac = 3;
+	optional string hostname = 4;
+	optional string ip = 5;
+	optional int32 equiptype = 6;
+	optional int32 state = 7;
+	optional double createon = 8;
+	optional double lasthwscanon =9;
+	optional double lastswscanon = 10;
+	optional int32 createby = 11;
+	
+	optional int32 BindUserID = 12;			// 绑定的员工ID
+	optional int32 IsOnline = 13;			// 当前是否在线
+}
+//  设备基本信息列表
+message BaseEquipInfoList
+{
+	repeated BaseEquipInfo list = 1;
+}
+///////////////////////////////////////////////////////////////////////////////////
+//策略的简要信息
+message SimplePolicy 
+{  
+    required int32 type = 1;  
+    required int32 id = 2;  
+    optional double last_time = 3;
+    optional int32 index = 4;
+}  
+
+//策略列表
+message SimplePolicyList
+{
+	optional int32 type = 1;
+	repeated SimplePolicy list = 2;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+// 客户定义
+message ClientSpan
+{
+	required int32 type = 1;// 客户的类型：机器/部门/员工
+	required uint32 id = 2;// 机器/部门/员工ID
+	optional int32 policyid = 3;// 使用的策略ID
+	optional int32 orderindex= 4;// 当前策略的顺序 
+	optional int32 isinherit = 5;// 继承于部门/公司策略的ID,为-1表示不是继承
+	optional int32 allowedinherit =6;// 是否允许往下继承
+}
+
+//客户列表
+message ClientSpanList
+{
+	repeated ClientSpan list = 1;
+}
+
+// 提供的默认程序/url/IP端口列表/设备设备控制/系统控制/文件防护类别表
+message SortType
+{
+	required int32 id = 1;
+	required int32 plyType = 2;			// 使用的模块类别(比如：程序过滤/网址过滤/设备控制)
+	optional string TypeDesc = 3;		// 关于这个类别的描述(比如：白名单程序列表/等等)
+	optional string ExeFileName = 4;
+	optional int32 FilterType = 5;
+	optional string FilterParam = 6;
+	optional int32 modetype = 7;
+	optional int32 fileopType = 8;
+}
+
+// 类别列表
+message SortTypeList
+{
+	repeated SortType list = 1;
+}
+
+// 程序/url/IP/端口/设备设备控制关系表
+message RelationShip
+{
+	required int32 SortTypeID = 1;
+	required int32 InofID = 2;
+}
+
+// 关系列表
+message RelationShipList
+{
+	repeated RelationShip list = 1;	
+}

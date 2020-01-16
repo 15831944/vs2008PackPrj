@@ -1,0 +1,1218 @@
+//import "cmmmessage.proto";
+
+package isafetec; 
+
+//作业操作状态：1-作业成功；2-作业已经下单；3-作业正在进行中；4-作业取消/失败；
+enum Job_Op_State
+{
+	Job_Op_State_UnKnow = 0;	//未知
+	Job_Op_State_Succ = 1; 		//作业成功
+	Job_Op_State_Order = 2; 	//作业已经下单
+	Job_Op_State_Going = 3; 	//作业正在进行中
+	Job_Op_State_Fail = 4; 		//作业失败
+	Job_Op_State_Cancel = 5; 	//作业取消
+}
+
+//打印管理产品数据定义
+//RemotePrintJob
+enum Printer_Paper_Source
+{
+	Paper_Tray_AUTO = 1000;		//自动选择
+	Paper_Tray_1 = 1001;			//第一纸盒
+	Paper_Tray_2 = 1002;			//第二纸盒
+	Paper_Tray_3 = 1003;			//第三纸盒
+	Paper_Tray_4 = 1004;			//第四纸盒
+	Paper_Tray_5 = 1005;			//第五纸盒
+	Paper_Tray_MANUAL = 1011;		//手动进纸器
+	Paper_Tray_ENVMANUAL = 1012;	//手动信封
+	Paper_Tray_ENVELOPE = 1013;		//信封进纸器
+	Paper_Tray_TRACTOR = 1014;    //滚动送纸器
+	Paper_Tray_SMALLFMT = 1015;   //小格式
+	Paper_Tray_LARGEFMT = 1016;   //大格式
+	Paper_Tray_LARGECAPACITY = 1017;	//大容量进纸器
+	Paper_Tray_CASSETTE = 1018;   //多功能进纸器
+}
+
+enum Print_Job_Type
+{
+	Print_Job_Type_Normal = 0;		//普通打印
+	Print_Job_Type_Cloud = 1;		//云打印
+	Print_Job_Type_USB = 2;			//USB打印
+	Print_Job_Type_TRANSCRIPT = 3;	//成绩打印
+	Print_Job_Type_ADMISSION = 4;	//公告打印
+	Print_Job_Type_LEAVESCHOOL = 5;	//证件打印
+	Print_Job_Type_Thrid = 6;		//第三方提交打印
+}
+
+enum JOB_STORAGE_TYPE
+{
+	JOb_SEC_NORMAL = 0;	//一般
+	JOB_SEC_FILED = 1;	//归档
+	JOB_SEC_ENCYPT = 2; //加密	
+}
+enum JOB_PRICE_TYPE
+{
+	JOb_PRICE_NULL = 0;	//一般
+	JOb_PRICE_USER = 1;	//归档
+	JOb_PRICE_DEP = 2; //加密	
+	JOb_PRICE_PRINTER = 3;
+}
+
+enum ScanChargeType
+{
+	Scan_Charge_Type_NULL = 0;	//未知
+	Scan_Charge_Type_Normal = 1;	//非扫二维码支付，如打印系统内部金额或者一卡通金额支付。
+	Scan_Charge_Type_Mobile = 2;	//扫二维码支付，如微信和支付宝等移动支付方式
+}
+
+//作业审核方式
+enum JOb_CHECK_BY
+{
+	JOB_CHECK_BY_NULL = 0;		//不需要审核
+	JOB_CHECK_BY_SYS = 1;		//系统自动审核
+	JOB_CHECK_BY_MANUAL = 2;	//人工审核
+	
+}
+//审核不通过之后，如何操作
+enum JOB_CHECK_FAILURE_ACTION_TYPE
+{
+	JOB_CONTINE_PRT_AND_ALARM_ADMIN = 0;
+	JOB_PAUSE_AND_ALARM_USER = 1;
+}
+
+//打印任务提交到打印机的方式
+enum JOB_SUBMIT_MODE
+{
+	ROAM_PRINTER = 0;			//漫游打印
+	FIXED_PRINTER_NOCHECK = 1;	//制定打印机,无需用户验证
+	USER_SEL_PRINTER_CHECK = 2;	//用户选择打印机
+}
+//打印站点打印作业的方式
+enum JOB_PRINT_MODE
+{
+	DIRECT_PRINT = 0;		//直接打印
+	CHECK_USER_PRINT = 1;	//验证后打印
+}
+//打印安全策略
+message PrintSecPolicy
+{
+	optional int32 active_footer = 1;
+	optional int32 active_header = 2;
+	optional int32 active_watermark = 3;
+	
+	optional string footer = 4;
+	optional string header = 5;
+	optional string watermark = 6;
+}
+
+//打印上传控制策略
+message JobSubmitCtrl
+{
+	optional int32 max_page_each_time = 1;
+	optional int32 max_size_each_time = 2;
+	optional int32 max_size_all = 3;
+	optional int32 cur_all_size = 4;
+}
+enum JOB_FILTER_TYPE
+{
+	JOB_FLT_BY_DOC_NAME = 0;
+	JOB_FLT_BY_DOC_TYPE = 1;
+	JOB_FLT_BY_DOC_CONTENT = 2;
+}
+//打印过滤
+message JobFilterPolciy
+{
+	optional JOB_FILTER_TYPE type = 1;
+	optional  string key_word = 2;
+}
+//审核流程
+message JobAuditProcess
+{
+	optional JOb_CHECK_BY check_by = 1;
+	optional int32 admin_id = 2;
+	optional JobFilterPolciy flt_policy = 3;
+	optional JOB_CHECK_FAILURE_ACTION_TYPE next_action = 4;
+}
+
+message SubmitPrintJob
+{
+	//设备基本信息
+	optional int32 equip_id = 1;
+	optional string equip_host = 2;
+	optional string win_user = 3;
+	optional int32 user_id = 4;
+	
+	optional int32 job_id = 5;		//jobid打印机产生的唯一标识
+	//
+	optional int32 paper_size = 6;	//纸张大小
+	optional string page_type = 7; //a4,a3
+	
+	optional int32 copies= 8;
+	optional int32 color = 9;
+	optional int32 total_page = 10;
+	optional int32 orientation = 11; //打印方向
+	optional int32 double_print = 12;
+	//文档名称
+	optional string doc_name = 13;
+	optional string printer_name =14;
+	
+	optional double submit_time =15;
+	//文件信息
+	optional int32 doc_size =16;
+	optional int32 zip_job_size = 17;	
+	optional string job_path = 18;
+	optional string job_dir = 19;
+	
+	//
+	//
+	optional int32 project_id = 20;					//项目
+	optional int32 order_PrtStation_id = 21;		//预约站点
+	optional int32 direct_PrtStation_id = 22;		//直接提交到该打印站点
+	
+	//安全属性
+	optional JOB_STORAGE_TYPE sec_type = 23;			//作业存储属性
+	
+	optional Printer_Paper_Source paper_source = 24;	//打印任务纸盒选择
+	optional bool image_use_physical_area = 25;	//在打印内容中,图片大小为打印设备的物理区域,不是打印区域
+	optional int32 collate = 26;	//打印校对，即逐份打印，默认应该是1
+}
+//打印作业列表
+message SubmitPrintJobList
+{
+	repeated SubmitPrintJob list = 1;
+}
+enum PRT_REQ_JOB_BY
+{
+	PRT_REQ_JOB_BY_USER = 0;	
+	PRT_REQ_JOB_BY_ORDER = 1;	
+	PRT_REQ_JOB_BY_DIRECT = 2; 	
+	PRT_REQ_JOB_BY_ASSISTANT = 3; 	//add by zfq,2012.12.02,打印助手
+	PRT_REQ_JOB_BY_BreakPoint = 4; 	//add by zxl,2015.03.11,断点续打
+}
+//打印站点向服务器请求的作业信息
+message PrtSationReqPrintJob
+{
+	optional int32 id = 1;
+	optional string job_path = 2;
+	optional string job_dir = 3;
+	optional double submit_time =4;
+
+	optional int32 job_size = 5;
+	optional int32 zip_job_size =6;
+	optional string doc_name = 7;
+	optional int32 paper_size = 8;
+	optional string page_type = 9; //a4
+	optional int32 copies = 10;
+	optional int32 color = 11;
+	optional int32 total_page = 12;
+	optional int32 orientation = 13; //打印方向
+	optional int32 double_print = 14;
+	
+	//设备基本信息
+	optional string equip_host = 15;
+	optional string win_user = 16;
+	optional string equip_ip = 17;
+	optional string user_name = 18;
+	
+	//作业属性
+	optional PRT_REQ_JOB_BY job_req_by = 19;	//0用户请求，1:预约请求，2：直接打印, 3:打印秘书打印
+	
+	//下面的信息，只有"直接打印"和"打印秘书打印的时候"的时候才是有效的
+	optional int32 user_id = 20;	
+	//optional int32 account_id = 21;			//账号id
+	optional double left_money = 22;
+	optional double special_left_money = 23;
+	
+	//
+	optional JOB_PRICE_TYPE price_type = 24;
+	optional double price  = 25;
+	
+	//打印到项目
+	optional int32 project_id = 26;
+	optional string project_name = 27;	
+	
+	optional PrintSecPolicy sec_policy = 28;
+	
+	//已经打印的信息
+	optional int32 printed = 29;			//已经打印页数
+	optional string guid = 30;				//已经打印的消费QueueNo
+	optional int32 printed_id = 31;			//已经打印记录ID
+	
+	//作业扩展信息
+	optional Printer_Paper_Source paper_source = 32;	//打印任务纸盒选择
+	optional Print_Job_Type print_job_type = 33;		//作业类型,如普通打印,云打印,usb打印,成绩打印等等
+	optional int32 print_from = 34;			//作业开始页索引
+	optional int32 print_to = 35;			//作业结束页索引
+	optional int32 tiff_use_physical_area = 36;	//在usb和云打印中,tiff大小为打印设备的物理区域,不是打印区域
+}
+//打印作业列表
+message PrtSationReqPrintJobList
+{
+	repeated PrtSationReqPrintJob list = 1;
+}
+
+//打印站点向服务器请求的历史作业信息
+message PrtSationReqPrintHistoryJob
+{
+	optional PrtSationReqPrintJob job = 1;	//作业详细信息
+	
+	//作业状态
+	optional int32 job_state = 2;			//作业状态
+	optional int32 job_file_deleted = 3;	//0-没有删除; 1-已经删除
+	optional double job_last_print_time = 4;	//作业最后一次打印时间
+	optional double job_delete_time = 5;		//作业删除时间
+}
+//打印作业列表
+message PrtSationReqPrintHistoryJobList
+{
+	repeated PrtSationReqPrintHistoryJob list = 1;
+}
+
+//一卡通信息
+message CardInfo
+{
+	optional string code = 1;
+	optional string user_name = 2;
+	optional string dep_name = 3;
+	optional double left_money = 4;
+	optional string pwd = 5;
+	
+	optional string id_card_no = 6;			//身份证号
+	optional string citizen_card_no = 7;	//市民卡号
+	optional string mobile_no	= 8;		//绑定的移动平台的第三方账号
+}
+//打印站点登陆信息
+message PrtStationLogon
+{
+	optional int32 ptr_id = 1;	//打印站点id
+	optional string name = 2;
+	optional string pwd = 3;
+	optional int32 audit_ok = 4;
+	optional CardInfo card = 5;
+}
+//打印站点用户验证信息
+message PrtStationUserAccount
+{
+	//账号信息
+	optional int32 user_id = 1;
+	optional int32 account_id = 2;			//账号id
+	optional double left_money = 3;
+	optional double special_left_money = 4;
+	optional string account_name = 5;
+	optional string real_name = 6;
+	optional string card_no = 7;			//一卡通卡号
+	optional string id_card_no = 8;			//身份证号
+	optional string citizen_card_no = 9;	//市民卡号
+	optional string mobile_no	= 10;		//绑定的移动平台的第三方账号
+	optional string dep_name = 11;
+}
+
+//打印计费信息
+message PrtStationPrice
+{	
+	//费率
+	optional JOB_PRICE_TYPE price_type = 1;  //3打印机费率，2部门费率1用户费率
+	optional double a3_hb_price = 2; 
+	optional double a3_color_price = 3;
+	optional double	a4_hb_price = 4;
+	optional double a4_color_price = 5;
+	optional double a3_hb_price_duplex  = 6; 	//后缀[_duplex]表示双面打印
+	optional double a3_color_price_duplex = 7;
+	optional double	a4_hb_price_duplex = 8;
+	optional double a4_color_price_duplex = 9;
+	optional int32 IsSupportPrintDuplexPrice = 10;
+}
+
+//打印计费信息-阶梯费率
+message PrtStationPriceStep
+{	
+	//费率
+	optional PrtStationPrice price = 1;
+	optional string PriceDesc = 2;  	//阶梯详述
+	optional int32 PageMin = 3; 		//操作量范围最小值(包含)
+	optional int32 PageMax = 4;			//操作量范围最大值(包含)
+}
+
+//打印计费信息-阶梯费率-列表
+message PrtStationPriceStepList
+{
+	repeated PrtStationPriceStep list = 1;
+}
+
+//复印计费信息
+message PrtCopyPrice
+{	
+	//费率
+	optional JOB_PRICE_TYPE price_type = 1;  //3打印机费率，2部门费率1用户费率
+	optional double a3_hb_price = 2; 
+	optional double a3_color_price = 3;
+	optional double	a4_hb_price = 4;
+	optional double a4_color_price = 5;
+}
+
+//复印计费信息-阶梯费率
+message PrtCopyPriceStep
+{	
+	//费率
+	optional PrtCopyPrice price = 1;
+	optional string PriceDesc = 2;  	//阶梯详述
+	optional int32 PageMin = 3; 		//操作量范围最小值(包含)
+	optional int32 PageMax = 4;			//操作量范围最大值(包含)
+}
+
+//复印计费信息-阶梯费率-列表
+message PrtCopyPriceStepList
+{
+	repeated PrtCopyPriceStep list = 1;
+}
+
+//扫描计费信息
+message PrtScanPrice
+{	
+	//费率
+	optional JOB_PRICE_TYPE price_type = 1;  //3打印机费率，2部门费率1用户费率
+	optional double hb_price = 2; 
+	optional double color_price = 3;
+	optional int32	unit = 4;
+}
+
+//扫描计费信息-阶梯费率
+message PrtScanPriceStep
+{	
+	//费率
+	optional PrtScanPrice price = 1;
+	optional string PriceDesc = 2;  	//阶梯详述
+	optional int32 PageMin = 3; 		//操作量范围最小值(包含)
+	optional int32 PageMax = 4;			//操作量范围最大值(包含)
+}
+
+//扫描计费信息-阶梯费率-列表
+message PrtScanPriceStepList
+{
+	repeated PrtScanPriceStep list = 1;
+}
+
+//打印站点用户验证
+message PrtStationCheckUserResult
+{
+	optional PrtStationUserAccount account = 1;
+	optional PrtStationPrice price = 2;
+	optional PrtCopyPrice copy_price = 3;
+	optional PrtScanPrice scan_price = 4;
+	optional int32 prt_id = 8;
+	optional PrtStationPriceStepList print_price_step_list = 9;
+	optional PrtCopyPriceStepList copy_price_step_list = 10;
+	optional PrtScanPriceStepList scan_price_step_list = 11;
+	optional PrintLimitPolicy print_limit_policy = 12;
+	optional CopyLimitPolicy copy_limit_policy = 13;
+	optional ScanLimitPolicy scan_limit_policy = 14;
+}
+
+//作业的状态
+enum SUBMIT_JOB_STATE
+{
+	JOB_SUBMITED_UNCHECK = 0;	//已经提交未审核
+	JOB_SUBMITED_CHECKED = 2;	//已审核
+	JOB_CHECKED_FAILED = 3;		//审核不通过
+	JOB_PRINTED = 4;		//已经打印
+	JOB_DELETED = 5;		//已经删除
+	JOB_PENDING_NOMONEY = 6;		//直接打印时，资金不足，被挂起
+	JOB_PENDING_PRINT_ERR = 7;	//物理打印机故障，被挂起
+	JOB_PENDING_WAIT_RESUBMIT = 8;	//等待重新提交
+	JOB_PENGING_WAIT_DELETE = 9;	//等待删除
+	JOB_CLOUD_DEAL_WAIT = 10;	//云文件等待处理
+	JOB_CLOUD_DEAL_PENDING = 11;	//云文件加入处理队列中
+	JOB_CLOUD_DEALING = 12;		//云文件处理中
+	JOB_CLOUD_DEAL_SUCC = 13;	//云文件处理成功
+	JOB_CLOUD_DEAL_FAIL = 14;	//云文件处理失败
+}
+//打印失败
+message PrtStationChargeErr
+{
+	optional int32 job_id = 1;
+	optional int32 user_id = 2;
+	optional bool need_update_job_state = 3;
+	optional SUBMIT_JOB_STATE job_new_state = 4;
+}
+//一卡通的扣费方式
+//
+
+
+
+
+
+//打印站点成功连接到服务器后，服务器发送到站点
+//打印站点配置信息
+message PrtStationInfo
+{
+	optional int32 id = 1;
+	optional int32 allow_order = 2;			//是否允许预约
+	optional int32 check_order_internal = 3;//获取预约的时间间隔
+	optional int32 allow_direct_print = 4;	//允许直接打印
+	optional int32 check_direct_job_internal = 5;//获取直接打印的间隔
+	optional bool on_server = 6;			//和服务器在同一台机器上
+	
+	optional string printer_name = 7;		//打印机名称
+	optional string fun_code = 8;			//功能代码
+	optional bool support_color = 9;		//支持彩色打印
+	optional double begin_time = 10;		//开放时间
+	optional double end_time = 11;			//
+	optional string prt_name = 12;			//打印站点名称
+	optional int32 support_duplex = 13;		//双面打印
+	optional PrtStationPrice print_price = 14;	//打印点打印费率
+	optional PrtCopyPrice copy_price = 15;	//打印点复印费率
+	optional PrtScanPrice scan_price = 16;	//打印点扫描费率
+	
+	optional string printer_ip = 17; 		//打印机IP
+	optional string print_station_ip = 18;	//打印站点IP
+
+}
+
+//自动添加打印站点信息
+message AutoAddPrtStationInfo
+{
+	optional string printer_name = 1;			//打印机名称
+	optional int32 printer_resolution = 2;				//打印机分辨率
+	optional int32 printer_speed = 3;
+	optional int32 printer_color = 4;
+	optional string prt_station_name = 5;		
+	optional string prt_station_comment = 6;
+	
+	
+	optional double a3_hb_price = 7; 
+	optional double a3_color_price = 8;
+	optional double	a4_hb_price = 9;
+	optional double a4_color_price = 10;
+	
+	optional string printer_ip = 11; //打印机IP
+	
+}
+
+//直接打印的流程
+//定时检测获取该站点的打印列表
+//
+//预约流程，
+//定时检测获取预约到该站点的打印文件
+//
+
+//打印项目信息
+message PrintProjectSampleInfo
+{
+	optional int32 id = 1;
+	optional string name = 2;
+}
+// 打印站点信息
+message PrintStationSampleInfo
+{
+	optional int32 id = 1;
+	optional string name = 2;
+	optional string addr = 3;
+	optional string comment = 4;
+}
+//打印作业安全信息
+message PrintJobSecTypeInfo
+{
+	optional JOB_STORAGE_TYPE type = 1;	//安全类型
+	optional string desc = 2;		//描述
+}
+//客户端连接成功后可以看到的信息
+message PrintCtlReqInfo
+{
+	repeated PrintStationSampleInfo order_print_list = 1;		//可以预约的打印站点
+	repeated PrintProjectSampleInfo project_list = 2;			//可以提交的打印项目
+	repeated PrintStationSampleInfo direct_print_list = 3;		//可以直接提交的打印站点
+	//repeated PrintJobSecTypeInfo sec_type_list = 4;				//可以使用的安全类型
+
+}
+//客户端登陆
+message PrintCltLogon
+{
+	optional int32 id = 1;					//id
+	optional string name = 2;				//用户名
+	optional string pwd = 3;				//密码
+	optional int32 project_id = 4;			//打印项目
+	optional int32 print_station_id = 5;	//打印站点
+	optional int32 order_station_id = 6;	//预约打印站点
+	optional int32 job_id = 7;				//要提交的文档的id
+	optional string page_type = 8;			//a3,a4
+	optional int32 page_count = 9;			//要打印多少页
+	optional int32 color = 10;				//色彩
+	optional int32 job_size = 11;			//作业大小
+}
+//客户端用验证码登录
+message PrintCltLoginVerifyCode
+{
+	optional int32 id = 1;					//id
+	optional string name = 2;				//用户名	
+	optional int32 loginType = 3;			//登录类型
+	optional string verifyCode = 4;			//验证码
+	optional int32 job_id = 5;				//要提交的文档的id
+}
+//客户端登陆验证结果
+message PrintCltCheckUserResult
+{
+	optional int32 user_id = 1;				//用户id
+	optional int32 account_id = 3;			//账号id
+	optional double left_money = 4;			//剩余金额
+	optional double special_left_money = 5;	//
+	
+	optional int32 a3_quota = 6;				//配额
+	optional int32 a4_quota = 7;				//配额
+	optional int32 period_type = 8;				//0 dayly,1:weekly,2:monthly
+	
+	optional int32 a3_printed_count = 9;		//已经打印数量
+	optional int32 a4_printed_count = 10;		//已经打印数量
+
+	optional int32 project_id = 11;				//打印项目
+	optional int32 print_station_id = 12;		//打印站点
+	optional int32 order_station_id = 13;		//预约打印站点
+	optional int32 job_id = 14;					//要提交的文档的id
+	
+	optional JobFilterPolciy filter = 15;		//过滤策略
+}
+
+//打印控制策略
+message PrintCtrlPolicy
+{
+	optional JOB_SUBMIT_MODE	submit_mode = 1;				//作业提交模式
+	optional JOB_PRINT_MODE		print_mode = 2;					//作业打印模式
+	optional int32 prt_id = 3;									//直接打印模式下打印站点id
+	optional string url = 4;									//访问web url
+	optional bool enable_doc_log = 5;							//记录打印的原始文档
+	optional string doc_type = 6;								//文档类型		
+}
+
+//预约完成
+message PrtOrderCmpltInfo
+{
+	optional int32 prt_id = 1;
+	optional int32 job_id = 2;
+}
+
+//一卡通充值
+message RechargeFromCard
+{
+	optional int32 prt_id = 1;
+	optional int32 user_id = 2;
+	optional string card_no = 3;
+	optional double left_money = 4;
+	optional double should_spend = 5;
+	optional double recharge_money = 6;
+	optional int32 recharge_for = 7;
+}
+
+//一卡通充值异常
+message RechargeFromCardErr
+{
+	optional int32 prt_id = 1;
+	optional int32 user_id = 2;
+	optional string card_no = 3;
+	optional string err_desc = 4;
+	optional double should_spend = 5;
+	optional double recharge_money = 6;
+	optional int32 recharge_for = 7;
+}
+//扣费类型
+enum CHARGE_FOR
+{
+	CHARGE_PRINT = 0;
+	CHARGE_COPY = 1;
+	CHARGE_SCAN = 2;
+	CHARGE_DEBT = 3;
+	CHARGE_PRE_PRINT = 4;
+	CHARGE_TRANSCRIPT = 5;
+	CHARGE_ADMISSION = 6;
+	CHARGE_USBPRINT = 7;
+	CHARGE_LEAVESCHOOL = 8;
+	CHARGE_CLOUDPRINT = 9;
+};
+//扣费结果
+message PrtChargeResult
+{
+	optional string seed = 1;
+	optional int32 res_code = 2;
+	optional CHARGE_FOR charge_for = 3;
+	optional PrtStationCheckUserResult res = 4;
+	optional string file_path = 5;
+	optional string other_info = 6;
+}
+//复印计费
+message PrtCopyCharge
+{
+//作业的基本信息
+	optional int32 prt_id = 1;
+	optional int32 user_id = 2;
+	
+	optional JOB_PRICE_TYPE price_type = 3;
+	optional double price = 4;
+	
+	optional string page_type = 5;
+	optional int32 count = 6;
+	optional int32 color = 7;
+
+	optional double time = 8;
+	optional double should_spend = 9;
+	optional double real_spend = 10;
+	
+	optional RechargeFromCard card = 15;
+	optional RechargeFromCardErr err = 16;
+	optional string seed = 17;
+	
+	optional int32 job_id = 18;
+}
+
+//扫描计费
+message PrtScanCharge
+{
+	optional string guid = 1;
+	optional int32 prt_id = 2;
+	optional int32 user_id = 3;
+	
+	optional JOB_PRICE_TYPE price_type = 4;
+	optional double price = 5;
+	
+	optional int32 size = 7;
+	optional int32 color = 8;
+	optional string path = 9;
+	optional string dir = 10;
+	optional string http_dir = 14;
+	
+	optional double time = 11;
+	optional double should_spend = 12;
+	optional double real_spend = 13;
+	
+	
+	optional RechargeFromCard card = 15;
+	optional RechargeFromCardErr err = 16;
+	optional string seed = 17;
+	
+	optional int32 job_id = 18;
+	optional int32 page_count = 19;
+	
+	optional ScanChargeType charge_type = 20;	//扫描操作支付方式
+}
+
+//打印站点预计扣费信息
+message PrtStationCharge
+{
+	optional string guid = 1;
+	//作业的基本信息
+	optional int32 job_id = 2;
+	optional int32 prt_id = 3;
+	optional int32 user_id = 4;
+	
+	//打印基本参数
+	optional int32 color = 5;
+	optional string page_type = 6;
+	optional JOB_PRICE_TYPE price_type = 7;
+	optional double price = 8;
+	optional int32 total_page_count = 9;
+	optional int32 printed_page_count = 10;
+	optional int32 printed_copies = 11;
+	optional int32 printed_from = 12;
+	optional int32 printed_to = 13;
+	//花费
+	optional double should_spend = 14;
+	optional double real_spend = 15;
+	optional double printed_time = 16;
+	//
+	optional int32 project_id = 17;
+	optional string project_name = 18;
+	optional PRT_REQ_JOB_BY job_req_by = 19;	//0用户请求，1:预约请求，2：直接打印 
+	
+	optional string seed = 20;
+}
+//打印一页或多页向服务器提交一次扣费，防止后面打印失败，扣费失败
+message PrtStationChargeOnEveryPage
+{
+	optional string guid = 1;
+	optional int32 printed_page_count = 2;
+	optional double real_spend = 3;
+	optional int32 all_printed = 4;
+	optional int32 user_id = 5;
+	optional PRT_REQ_JOB_BY job_req_by = 6;	//0用户请求，1:预约请求，2：直接打印 
+	optional int32 job_id = 7;
+
+	optional RechargeFromCard card = 15;
+	optional RechargeFromCardErr err = 16;
+	optional string seed = 17;
+}
+
+//打印站点预警信息
+message PrtStationAlarm
+{
+	optional int32  prt_id = 1;
+	optional string type = 2;
+	optional string subject = 3;
+	optional string content = 4;
+}
+
+//打印充值工具
+message PrtChargeToolLogon
+{
+	optional int32  id = 1;
+	optional string name = 2;
+	optional string pwd = 3;
+}
+//登陆结果
+message PrtChargeToolCheckResult
+{
+	optional int32  id = 1;
+	optional string name = 2;
+	optional string pwd = 3;
+}
+//操作日志
+message PrtChargeToolOPLog
+{
+	optional int32  admin_id = 1;
+	optional string admin_name = 2;
+	optional int32 op_type = 3;
+	optional double amount = 4;
+	optional double specail_money = 5;
+	
+	optional string card_no = 6;
+	optional string name = 7;
+}
+
+//add by zfq,2013.01.29,打印点用户自助转账，从一卡通中转入打印系统
+message PrtUserSelfChargeOPLog
+{
+	optional int32  user_id = 1;	//用户ID
+	optional string user_name = 2;	//用户姓名
+	optional int32	prt_id = 3;		//打印机ID
+	optional int32  op_for = 4;		//在何种操作中转账,100 打印，101复印，102 扫描
+	optional int32  reserve1 = 5;	//保留
+	optional double amount = 6;		//转账的金额
+	optional double specail_money = 7;
+	
+	optional string card_no = 8;
+	
+	//add by zxl,2013.02.18,标识转账的记录文件
+	optional string guid = 9;
+	optional double time = 10;
+}
+
+//add by zfq,2013.01.29,打印点用户自助转账应答，从一卡通中转入打印系统
+message PrtUserSelfChargeOpLogACK
+{
+	optional int32  user_id = 1;	//用户ID
+	optional int32  prt_id = 2;		//打印机ID
+	optional int32	res_code = 3;	//操作结果,DEF_UserSelfChargeOpLogACK_OK等
+	optional int32  op_for = 4;		//在何种操作中转账,100 打印，101复印，102 扫描
+	optional PrtStationCheckUserResult res = 5;	
+	
+	//add by zxl,2013.02.18,标识转账的记录文件
+	optional string guid = 6;
+	optional double time = 7;
+}
+
+//打印管理员信息
+message PrtAdminInfo
+{
+	optional int32 id = 1;
+	optional string name = 2;
+	optional string realname = 3;
+}
+message PrtAdminInfoList
+{
+	repeated PrtAdminInfo list = 1;
+}
+
+//打印文档日志
+message PrintDocumentInfo
+{
+	//设备基本信息
+	optional int32 equip_id = 1;
+	optional string equip_host = 2;
+	optional string win_user = 3;
+	optional int32 user_id = 4;
+	
+	optional int32 id = 5;
+	//文档名称
+	optional string doc_name = 6;
+	optional string printer_name =7;
+	
+	optional double time = 8;
+	//文件信息
+	optional int32 doc_size =9;
+	optional int32 zip_size = 10;	
+	optional string path = 11;
+	optional string name = 12;
+	optional string orig_path = 13;
+}
+
+//ftp信息
+message FtpConfigInfo
+{
+	optional string ip = 1;
+	optional string port = 2;
+	
+	optional string disk_path = 3;
+	optional string dir = 4;
+	
+	optional string user = 5;
+	optional string pwd =6;
+}
+
+
+//===================================add by zfq,2012.12.18,begin
+//--打印策略掩码
+enum PRINT_POLICY_MASK
+{
+	EnPrintPolicyMask_Disable			=	0;
+	EnPrintPolicyMask_EnableBlackWhite	=	1;	//0x01
+	EnPrintPolicyMask_EnableColor		=	2;	//0x10
+	EnPrintPolicyMask_EnableAll			=	3;	//0x11
+}
+
+//--复印策略掩码
+enum COPY_POLICY_MASK
+{
+	EnCopyPolicyMask_Disable			=	0;
+	EnCopyPolicyMask_Enable				=	1;	//0x01
+}
+
+//--扫描策略掩码
+enum SCAN_POLICY_MASK
+{
+	EnScanPolicyMask_Disable			=	0;
+	EnScanPolicyMask_Enable				=	1;	//0x01
+}
+
+//--传真策略掩码
+enum FAX_POLICY_MASK
+{
+	EnFaxPolicyMask_Disable				=	0;
+	EnFaxPolicyMask_Enable				=	1;	//0x01
+}
+
+//--功能策略信息
+message CFuncPolicy
+{
+	//用户ID
+	optional int32 UserID			= 1;
+	
+	//打印机ID
+	optional int32 PrtID			= 2;
+	
+	//打印策略掩码,0:禁止;0x01:黑白;0x10:彩色;0x11:都是
+	optional int32 PrintPolicyMask	= 3;
+	
+	//复印策略掩码,0:禁止;0x01:允许
+	optional int32 CopyPolicyMask	= 4;
+	
+	//扫描策略掩码,0:禁止;0x01:允许
+	optional int32 ScanPolicyMask	= 5;
+
+	//传真策略掩码,0:禁止;0x01:允许
+	optional int32 FaxPolicyMask	= 6;
+}
+//===================================add by zfq,2012.12.18,end
+
+//===================================add by zfq,2013.01.31,begin
+//打印管理端有用户请求打印文档
+message PrtCenterSvr_UserPrintReq
+{
+	optional int32	prt_id		= 1;			//打印机的ID
+	optional string prt_name	= 2;			//打印机的名称
+	optional string user_name	= 3;			//文档提交者的用户名
+	optional string doc_name	= 4;			//文档名称
+	optional int32	doc_id		= 5;			//文档储存在打印管理端本地数据库中的id
+	
+	optional string page_type	= 6;			//a3,a4
+	optional int32 page_count	= 7;			//要打印多少页
+	optional int32 color		= 8;			//色彩
+	optional int32 job_size		= 9;			//作业大小
+	
+	optional int32 job_id_SqlLite = 10;			//SqlLite中的打印ID
+	
+	//JOB_INFO_2结构体的信息
+	optional int32 jobid_ji2	= 11;		
+	optional string printername	= 12;
+	optional string machinename	= 13;
+	optional string username	= 14;
+	optional string doucment	= 15;
+	optional string notifyname	= 16;
+	optional string datatype	= 17;
+	optional string paramenters	= 18;
+	optional string driver_name	= 19;
+	optional int32 device_mode	= 20;			//LPDEVMODE  pDevMode;
+	optional string pstatus		= 21;
+	optional int32 status		= 22;
+	optional int32 priority		= 23;
+	optional int32 position		= 24;
+	optional int32 starttime	= 25;
+	optional int32 untiltime	= 26;
+	optional int32 totalpages	= 27;
+	optional int32 size			= 28;
+	optional string submitted	= 29;
+	optional int32 time			= 30;
+	optional int32 pagesprinted	= 31;
+	
+	optional string spl_path	= 32;			//spl文件路径
+	
+	
+	// 输出参数
+	optional int32  ret_user_id		= 33;			//返回的用户ID
+	optional int32	ret_ack_type	= 34;			//验证结果,0 成功;1 无此用户;2 无打印权限;3 页数超标;4 色彩策略不符合;5 作业大小不符合
+	
+	//JOB_INFO_2结构体的信息,续
+	optional int32 paper_size		= 50;	//纸张大小,a3,a4
+	optional int32 dm_copies		= 51;	//打印份数	
+	optional int32 dm_Orientation	= 52;	//打印方向
+	optional int32 double_print		= 53;   //双面打印
+	optional double submit_time		= 54;	//提交时间
+}
+
+//===================================add by zfq,2013.01.31,end
+
+
+//add by zxl,2013.10.08, 调整打印数
+message AdjustPrintCountInfo
+{
+	optional int32 userid = 1;				//用户ID
+	optional int32 accountid = 2;			//账号ID
+	optional int32 shouldprintedcount = 3;	//应该打印的纸张数
+	optional int32 printedcount = 4;		//真正打印的纸张数
+	optional int32 printerid = 5;			//打印机ID	
+	optional PrtSationReqPrintJob oriprintjob = 6;		//实际打印任务的原始信息
+	optional double shouldspend = 7;		//应该打印的费用
+	optional double printedspend = 8;		//真正打印的费用
+	optional int32 jobid = 9;		        //任务在MFP中的ID
+}
+
+//add by zxl,2013.12.05, 扫描到邮箱的邮件列表
+message ScanToMailAddrList
+{
+	optional int32 userid	= 1;	//用户id
+	repeated string mailaddress = 2;		//可用的邮箱地址
+}
+
+//成绩导入工具登录信息
+message PrtTranscriptIToolLogon
+{
+	optional int32  id = 1;
+	optional string name = 2;
+	optional string pwd = 3;
+}
+
+//成绩导入工具登陆结果
+message PrtTranscriptIToolCheckResult
+{
+	optional int32  id = 1;
+	optional string name = 2;
+	optional string pwd = 3;
+}
+
+enum PrtDbType
+{
+	DbType_MSDE	= 0;			//桌面数据库msde
+	DbType_MSSQLSERVER = 1;		//MS SQL SERVER
+	DbType_ORACLESQL = 2;		//ORACLE
+	DbType_MYSQL = 3;			//MYSQL
+}
+
+//数据库配置信息
+message PrtDbConfigInfo
+{
+	optional int32  DbType = 1;		//数据库类型
+	optional string DbIp = 2;		//数据库IP
+	optional string DbPort = 3;		//数据库Port
+	optional string DbName = 4;		//数据库名
+	optional string DbUser = 5;		//用户名
+	optional string DbPwd = 6;		//密码
+}
+
+
+
+message ReqChargePrintTicket
+{
+	optional string account_name = 1;
+	optional string real_name = 2;
+	optional string card_no = 3;
+}
+
+//打印小票信息
+message ChargePrintTicket
+{
+	//账号信息
+	optional int32 user_id = 1;
+	optional int32 account_id = 2;			//账号id
+	optional double left_money = 3;
+	optional double special_left_money = 4;
+	optional string account_name = 5;
+	optional string real_name = 6;
+	optional string card_no = 7;
+	
+	optional int32 print_count_A4 = 8;
+	optional int32 print_count_A3 = 9;
+	optional double print_price_A4 = 10;
+	optional double print_price_A3 = 11;
+	optional double print_spend = 12;
+	
+	optional int32 copy_count_A4 = 13;
+	optional int32 copy_count_A3 = 14;
+	optional double copy_price_A4 = 15;
+	optional double copy_price_A3 = 16;
+	optional double copy_spend = 17;
+	
+	optional int32 scan_unit = 18;
+	optional int32 scan_count = 19;
+	optional double scan_size = 20;
+	optional double scan_price = 21;
+	optional double scan_spend = 22;
+	
+	optional int32 fax_count = 23;
+	optional double fax_price = 24;
+	optional double fax_spend = 25;
+	
+	optional double cash_pledge = 26;
+	optional double cash_back = 27;
+	
+	optional string other_info = 28;
+	optional double before_money = 29;
+	optional double after_money = 30;
+	optional string purchase_date = 31;
+	optional string termID = 32;
+	optional string verification_code = 33;
+	optional int32 ticket_printed_times = 34;
+	optional int32 ticket_log_id = 35;
+}
+
+enum JOB_TYPE
+{
+	JOb_TYPE_NULL = 0;
+	JOb_TYPE_PRINT = 1;
+	JOb_TYPE_COPY = 2;
+	JOb_TYPE_SCAN = 3;
+	JOb_TYPE_FAX = 4;	
+	JOb_TYPE_CheckDebt = 5;	
+}
+
+//作业限额类型
+enum JOB_LIMIT_TYPE
+{
+	JOb_LIMIT_PRINTER = 0;
+	JOb_LIMIT_DEP = 1; 
+	JOb_LIMIT_USER = 2;
+	JOb_LIMIT_NULL = 3;	
+}
+
+//作业限额周期. 1：每天 2：每周 3：每月4:每个季度
+enum JOB_LIMIT_PERIOD_TYPE
+{
+	JOb_LIMIT_PERIOD_NULL = 0;	
+	JOb_LIMIT_PERIOD_DAY = 1;
+	JOb_LIMIT_PERIOD_WEEK = 2;
+	JOb_LIMIT_PERIOD_MONTH = 3;
+	JOB_LIMIT_PERIOD_QUARTER = 4;
+}
+
+message PrintLimitPolicy
+{
+	optional JOB_TYPE job_type = 1;
+	optional JOB_LIMIT_TYPE job_limit_type = 2;
+	optional JOB_LIMIT_PERIOD_TYPE job_limit_period_type = 3;
+	optional int32 state = 4;		//限额状态,0-禁用,1-启用	
+	optional int32 LimitPage = 5;	//限额数量
+	optional int32 HaveOpPage = 6;	//已使用数量
+}
+
+message CopyLimitPolicy
+{
+	optional JOB_TYPE job_type = 1;
+	optional JOB_LIMIT_TYPE job_limit_type = 2;
+	optional JOB_LIMIT_PERIOD_TYPE job_limit_period_type = 3;
+	optional int32 state = 4;		//限额状态,0-禁用,1-启用	
+	optional int32 LimitPage = 5;	//限额数量
+	optional int32 HaveOpPage = 6;	//已使用数量
+}
+message ScanLimitPolicy
+{
+	optional JOB_TYPE job_type = 1;
+	optional JOB_LIMIT_TYPE job_limit_type = 2;
+	optional JOB_LIMIT_PERIOD_TYPE job_limit_period_type = 3;
+	optional int32 state = 4;		//限额状态,0-禁用,1-启用	
+	optional int32 LimitPage = 5;	//限额数量
+	optional int32 HaveOpPage = 6;	//已使用数量
+}
+
+message PrinterMeterLog
+{
+	required int32 PrintId = 1;		//抄表的打印点id
+	optional double RecordPrintMeterTime = 2; //抄表的时间
+	optional int32 OpAdminId = 3;	//抄表操作管理员ID
+	
+	//打印计数
+	optional int32 A4PrintTotalPage = 4;	//A4打印总计数
+	optional int32 A4PrintColorPage = 5;	//A4打印彩色总计数
+	optional int32 A4PrintHBPage = 6;	    //A4打印黑白总计数
+	optional int32 A3PrintTotalPage = 7;	//A3打印总计数
+	optional int32 A3PrintColorPage = 8;	//A3打印彩色总计数
+	optional int32 A3PrintHBPage = 9;	    //A3打印黑白总计数
+	optional int32 OtherPrintTotalPage = 10;	//其它纸型打印总计数
+	optional int32 OtherPrintColorPage = 11;	//其它纸型打印彩色总计数
+	optional int32 OtherPrintHBPage = 12;		//其它纸型打印黑白总计数
+	
+	
+	//复印计数
+	optional int32 A4CopyTotalPage = 13;	//A4复印总计数
+	optional int32 A4CopyColorPage = 14;	//A4复印彩色总计数
+	optional int32 A4CopyHBPage = 15;	    //A4复印黑白总计数
+	optional int32 A3CopyTotalPage = 16;	//A3复印总计数
+	optional int32 A3CopyColorPage = 17;	//A3复印彩色总计数
+	optional int32 A3CopyHBPage = 18;	    //A3复印黑白总计数
+	optional int32 OtherCopyTotalPage = 19;	//其它纸型复印总计数
+	optional int32 OtherCopyColorPage = 20;	//其它纸型复印彩色总计数
+	optional int32 OtherCopyHBPage = 21;	//其它纸型复印黑白总计数
+	
+	//扫描计数
+	optional int32 ScanTotalPage = 22;		//扫描总计数
+	optional int32 ScanBigColorPage = 23;	//扫描大幅彩色总计数
+	optional int32 ScanBigHBPage = 24;		//扫描大幅黑白总计数
+	optional int32 ScanSmallColorPage = 25;	//扫描小幅彩色总计数
+	optional int32 ScanSmallHBPage = 26;	//扫描小幅黑白总计数
+	
+	//传真计数
+	optional int32 A4FaxTotalPage = 27;		//A4传真总计数
+	optional int32 A4FaxColorPage = 28;		//A4传真彩色总计数
+	optional int32 A4FaxHBPage = 29;	    //A4传真黑白总计数
+	optional int32 A3FaxTotalPage = 30;		//A3传真总计数
+	optional int32 A3FaxColorPage = 31;		//A3传真彩色总计数
+	optional int32 A3FaxHBPage = 32;	    //A3传真黑白总计数
+	optional int32 OtherFaxTotalPage = 33;	//其它纸型传真总计数
+	optional int32 OtherFaxColorPage = 34;	//其它纸型传真彩色总计数
+	optional int32 OtherFaxHBPage = 35;		//其它纸型传真黑白总计数
+
+	//其它操作计数
+	optional int32 OtherOpTotalPage = 36;	//其它操作总计数
+	optional int32 OtherOpColorPage = 37;	//其它操作彩色总计数
+	optional int32 OtherOpHBPage = 38;	    //其它操作黑白总计数
+
+}
+
+//打印站点配置信息
+message PrinterShareInfo
+{
+	optional int32 id = 1;	
+	required string pc_ip_addr = 2; 		//共享pc的IP
+	required string printer_name = 3;		//共享的打印机名
+	required string print_share_name = 4;	//共享的打印点名
+	optional string printer_ip = 5; 		//共享的打印机IP
+	optional string printer_dpi = 6;		//共享的打印机dpi
+	optional string printer_speed = 7;		//共享的打印机速率
+	optional double begin_time = 8;		//共享的打印机开放时间
+	optional double end_time = 9;			//共享的打印机结束时间
+	optional int32 support_duplex = 10;		//共享的打印机支持双面打印
+	optional int32 support_color = 11;		//共享的打印机支持彩色打印
+	
+	optional string pc_addr = 12;		//共享的打印点名的物理地址
+	optional string pc_host = 13;		//共享的打印点的主机名
+	optional string pc_mac_addr = 14;	//共享的打印点的MAC
+	optional string pc_disknum = 15;		//共享的打印点名的disknum
+	optional string print_state = 16;	//共享的打印点名的状态
+	
+	optional string tel = 17;		//共享的打印点名的维护电话
+	optional string email = 18;		//共享的打印点名的维护邮件
+	optional string comment = 19;	//共享的打印点名的说明与注释
+}

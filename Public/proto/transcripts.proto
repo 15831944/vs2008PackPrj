@@ -1,0 +1,940 @@
+package isafetec;
+
+//准考证信息，照片的二进制数据会紧跟着本Msg之后
+message ExamCardInfo
+{
+	optional int32		id				= 1;		//数据库中的id
+	optional int32		user_id			= 2;		//用户的id
+	optional int32      sex				= 3;		//性别,1男 0女
+	optional string		title			= 4;		//标题
+	optional string		lang_type		= 5;		//语种
+	optional string		paper_code		= 6;		//准考证号
+	optional string		name			= 7;		//姓名
+	optional string		student_code	= 8;		//学号
+	optional string		id_code			= 9;		//身份证号
+	optional string		academy			= 10;		//学院
+	optional string		academy_sub		= 11;		//系
+	optional string		major			= 12;		//专业	
+	optional string		class_dep			= 13;		//班级
+	optional string		exam_room		= 14;		//考场
+	optional string		computer_room	= 15;		//机试机房
+	optional string		written_room	= 16;		//笔试教师
+	optional string		position_code	= 17;		//座位号
+	optional string		computer_begin_time	= 18;	//机试开始时间
+	optional string		computer_end_time	= 19;	//机试结束时间
+	optional string		written_begin_time	= 20;	//笔试开始时间
+	optional string		written_end_time	= 21;	//笔试结束时间
+	optional string		notice				= 22;	//注意事项
+	optional string		comment				= 23;	//考生须知
+	optional string     comment2			= 24;
+	optional string     release_time		= 25;   //证件落款日期，发证时间
+	optional bytes		photo				= 26;
+	optional int32		exam_type			= 27;	//证件类型
+	optional Paper_State		state				= 28;	//状态,0-禁用,1-启用,2-启用自定义模板
+	optional string		exam_name			= 29;	//考试名称
+}
+
+//准考证信息列表
+message ExamCardInfoList
+{
+	repeated ExamCardInfo list = 1;	//准考证信息列表
+}
+
+//学生信息扩展信息(用于成绩打印)-三江学院
+message StudentInfoEx_SJXY
+{
+	optional int32 userid = 1;				//打印系统用户id
+	optional string studentname = 2;		//姓名
+	optional string studentcode = 3;		//学号
+	optional int32 RequiredLession = 4;		//必修课数量
+	optional int32 PublicSleLession = 5;	//公共选修课数量
+	optional int32 PublicBaseLession = 6;	//公共基础课数量
+	optional int32 SelectLession = 7;		//选修数量
+	optional int32 PraticeLession = 8;		//实践教学数量
+	optional int32 MajorLession = 9;		//专业方向课数量
+	optional int32 MajorBaseLession = 10;	//专业基础课数量
+	optional int32 DegreeLession = 11;		//学位课数量
+	optional double HaveGetCredit = 12;		//已获得学分
+	optional string AcademyComment = 13;	//系部意见
+	optional double ACDate = 14;			//系部意见的评价时间
+	optional string SchoolComment = 15;		//教务处审核
+	optional double AverageGpa = 16;		//平均绩点
+	optional double AverageScore = 17;		//平均成绩
+	optional double AverageScoreEx = 18;	//加权平均成绩
+	optional string ViolationLission = 19;	//考试违规科目，用|分隔，如（语言|数学|英文）
+	optional string GraComment = 20;		//毕业结论，如：毕业
+	optional string GraDesTitle = 21;		//毕业设计标题
+	optional string GraDesScore = 22;		//毕业设计成绩
+	optional double GraduateAllCredit = 23;	//毕业应取得总学分
+	optional string PhotoDir = 24;			//学生照片所在目录(如：C:\Photo)
+	optional string PhotoName = 25;			//学生照片文件名(如：123.jpg)
+	optional bytes Photo = 26;				//学生照片(可以以文件形式提供,见PhotoDir和PhotoName)
+	optional string Comment = 27;			//备注信息
+	optional string ChangeInSchool = 28; 	//学籍变动情况
+	optional string Instrutor = 29;			//指导老师
+	optional string AuditPerson = 30;		//审核人
+	optional string StudentNameEng = 31;	//学生姓名英文
+	optional string SchoolEng = 32;			//学校名称英文
+	optional string AcademyEng = 33;		//学院名称英文
+	optional string Major = 34;			//专业名称
+	optional string MajorEng = 35;  	//专业名称英文
+	optional string EduLevelEng	= 36;		//培养层次英文
+	optional string InstrutorEng = 37;//指导老师英文
+	optional string GraDesTitleEng = 38;		//毕业设计标题英文
+	optional string ChangeInSchoolEng = 39; 	//学籍变动情况英文
+	optional string GraCommentEng = 40;		//毕业结论英文，如：毕业
+	optional string Academy = 41; //学院
+	
+}
+
+//在校证明-三江学院
+message AtSchoolInfo_SJXY
+{
+	optional int32 userid = 1;			//打印系统用户id
+	optional string title = 2;			//证明标题
+	optional int32 SchoolYear = 3;		//学生学届
+	optional string studentcode = 4;	//学号
+	optional string studentname = 5;	//姓名
+	optional string studentname_eng = 6;//学生英文名
+	optional string sex = 7;			//性别
+	optional string sex_eng = 8;		//性别英文
+	optional string school = 9;			//学院
+	optional string school_eng = 10;	//学院英文名
+	optional string academy = 11;		//学院
+	optional string academy_eng = 12;	//学院英文名
+	optional string major = 13;			//专业
+	optional string major_eng = 14;		//专业英文名
+	optional string majorsub = 15;		//专业
+	optional string majorsub_eng = 16;	//专业英文名
+	optional string class = 17;			//班级
+	optional string class_eng = 18;		//班级英文名
+	optional string schoolLength = 19;	//学制，如：【4】年
+	optional string eduLevel = 20;		//培养层次：如：本科
+	optional string eduLevel_eng = 21;	//培养层次(英文)
+	optional string IDCode = 22;		//身份证号
+	optional int32 schoolstart = 23;	//入学年份
+	optional string paperdept = 24;		//发证部门
+	optional int32 paperyear = 25;		//证件年份
+	optional string PaperBatchNum = 26;	//证件批号	
+}
+//学生通用信息信息（用于成绩打印）
+message StudentInfo_Universal
+{
+	optional int32 userid = 1;			//打印系统用户id
+	optional string StudentName = 2;	//姓名
+	optional string StudentCode = 3;	//学号
+	optional string StudentCardId = 4;	//一卡通卡号
+	optional string StudentPwd = 5;	//一卡通密码
+	optional string StudentIdNo = 6;	//身份证号
+	optional string studentDiplomaNo = 7;	//毕业证号
+	optional string StudentDegreeNo = 8;	//学位证号
+	optional string Address = 9;		//家庭住址
+	optional string Sex = 10;			//性别：1-男；2-女；3-未知
+	optional string Nation = 11;		//民族
+	optional string EduLevel = 12;		//培养层次(学历）
+	optional string EduDegree = 13;		//学位
+	optional int32 SchoolCode = 14;		//学校学校代码
+	optional string SchoolName = 15;		//学校名称
+	optional int32 AcademyCode = 16;	//学院代码
+	optional string Academy = 17;		//学院名称
+	optional int32 MajorCode = 18;		//专业代码
+	optional string Major = 19;			//专业名称
+	optional int32 MajorSubCode = 20;	//专业方向代码
+	optional string MajorSub = 21;		//专业方向名
+	optional string ClassCode = 22;		//班级代码
+	optional string Class = 23;			//班级
+	optional int32 SchoolYear = 24;		//学届
+	optional string SchoolLength = 25;	//学制
+	optional string LeaveSchoolInfo = 26;	//离校原因
+	optional double SchoolStartDate = 27;	//入学时间
+	optional double LeaveSchoolDate = 28;	//离校时间
+	optional string StateValue = 29;		//状态:未知/在校/毕业/肄业/休学/其他
+	optional int32 State = 30;				//状态:0-未知；1-在校；2-毕业；3-肄业；4-休学；5-其他
+	optional double GraDate = 31;			//毕业日期	
+	optional double BirthDate = 32;			//出生日期
+	optional string PlaceOfOrigin = 33;		//籍贯
+	optional int32 StuHeight = 34; 			//学生身高
+	optional string HomeAddInProv = 35;		//家庭所在省
+	optional string HomeAddInCity = 36;		//家庭所在市
+	optional string OriPlaceInProv = 37;		//籍贯所在省
+	optional string	OriPlaceInCity = 38;		//籍贯所在市
+	optional string ZipCode = 39;				//家庭邮编
+	optional string TelephoneNo = 40;			//家庭电话
+}
+//学生信息(用于成绩打印)-三江学院
+message StudentInfo_SJXY
+{
+	optional int32 userid = 1;			//打印系统用户id
+	optional string StudentName = 2;	//姓名
+	optional string StudentCode = 3;	//学号
+	optional string StudentCardId = 4;	//一卡通卡号
+	optional string StudentPwd = 5;	//一卡通密码
+	optional string StudentIdNo = 6;	//身份证号
+	optional string studentDiplomaNo = 7;	//毕业证号
+	optional string StudentDegreeNo = 8;	//学位证号
+	optional string Address = 9;		//家庭住址
+	optional string Sex = 10;			//性别：1-男；2-女；3-未知
+	optional string Nation = 11;		//民族
+	optional string EduLevel = 12;		//培养层次(学历）
+	optional string EduDegree = 13;		//学位
+	optional int32 SchoolCode = 14;		//学校学校代码
+	optional string SchoolName = 15;		//学校名称
+	optional int32 AcademyCode = 16;	//学院代码
+	optional string Academy = 17;		//学院名称
+	optional int32 MajorCode = 18;		//专业代码
+	optional string Major = 19;			//专业名称
+	optional int32 MajorSubCode = 20;	//专业方向代码
+	optional string MajorSub = 21;		//专业方向名
+	optional string ClassCode = 22;		//班级代码
+	optional string Class = 23;			//班级
+	optional int32 SchoolYear = 24;		//学届
+	optional string SchoolLength = 25;	//学制
+	optional string LeaveSchoolInfo = 26;	//离校原因
+	optional double SchoolStartDate = 27;	//入学时间
+	optional double LeaveSchoolDate = 28;	//离校时间
+	optional string StateValue = 29;		//状态:未知/在校/毕业/肄业/休学/其他
+	optional int32 State = 30;				//状态:0-未知；1-在校；2-毕业；3-肄业；4-休学；5-其他
+	optional double GraDate = 31;			//毕业日期	
+	optional double BirthDate = 32;			//出生日期
+	optional string PlaceOfOrigin = 33;		//籍贯
+	optional int32 StuHeight = 34; 			//学生身高
+	optional string HomeAddInProv = 35;		//家庭所在省
+	optional string HomeAddInCity = 36;		//家庭所在市
+	optional string OriPlaceInProv = 37;		//籍贯所在省
+	optional string	OriPlaceInCity = 38;		//籍贯所在市
+	optional string ZipCode = 39;				//家庭邮编
+	optional string TelephoneNo = 40;			//家庭电话
+	optional StudentInfoEx_SJXY infoex = 41;		//学生扩展信息
+}
+
+//学生信息(用于成绩打印)-对外经贸大学
+message StudentInfo_DWJMDX
+{
+	optional int32 userid = 1;			//打印系统用户id
+	optional string StudentName = 2;	//姓名
+	optional string StudentCode = 3;	//学号
+	optional string StudentCardId = 4;	//一卡通卡号
+	optional string StudentPwd = 5;	//一卡通密码
+	optional string StudentIdNo = 6;	//身份证号
+	optional string studentDiplomaNo = 7;	//毕业证号
+	optional string StudentDegreeNo = 8;	//学位证号
+	optional string Address = 9;		//家庭住址
+	optional string Sex = 10;			//性别：1-男；2-女；3-未知
+	optional string Nation = 11;		//民族
+	optional string EduLevel = 12;		//培养层次(学历）
+	optional string EduDegree = 13;		//学位
+	optional string SchoolNameEng = 14;		//学校学校代码
+	optional string SchoolName = 15;		//学校名称
+	optional string AcademyEng = 16;	//学院代码
+	optional string Academy = 17;		//学院名称
+	optional string MajorEng = 18;		//专业代码
+	optional string Major = 19;			//专业名称
+	optional string MajorSubEng = 20;	//专业方向代码
+	optional string MajorSub = 21;		//专业方向名
+	optional string ClassEng = 22;		//班级代码
+	optional string Class = 23;			//班级
+	optional int32 SchoolYear = 24;		//学届
+	optional string SchoolLength = 25;	//学制
+	optional string LeaveSchoolInfo = 26;	//离校原因
+	optional double SchoolStartDate = 27;	//入学时间
+	optional double LeaveSchoolDate = 28;	//离校时间
+	optional string StateValue = 29;		//状态:未知/在校/毕业/肄业/休学/其他
+	optional int32 State = 30;				//状态:0-未知；1-在校；2-毕业；3-肄业；4-休学；5-其他
+	optional double GraDate = 31;			//毕业日期	
+	optional double BirthDate = 32;			//出生日期
+	optional string PlaceOfOrigin = 33;		//籍贯
+	optional int32 StuHeight = 34; 			//学生身高
+	optional string HomeAddInProv = 35;		//家庭所在省
+	optional string HomeAddInCity = 36;		//家庭所在市
+	optional string OriPlaceInProv = 37;		//籍贯所在省
+	optional string	OriPlaceInCity = 38;		//籍贯所在市
+	optional string ZipCode = 39;				//家庭邮编
+	optional string TelephoneNo = 40;			//家庭电话
+	optional double GraduateAllCredit = 41;		//应修学分
+	optional double GetAllCredit = 42;			//已修学分
+	optional double GPA = 43;			//GPA
+	optional string GraChkRet = 44;		//毕业结论
+	optional string Supervisor = 45;	//导师
+	optional string bxhj_NO = 46;		//必修环节-编号
+	optional string bxhj_Name = 47;		//必修环节-名称
+	optional string bxhj_Attribute = 48; //必修环节-属性
+	optional string bxhj_Credit = 49;	//必修环节-学分
+	optional string bxhj_Score = 50;	//必修环节-成绩（通过、不通过）
+	optional string bxhj_Year	= 51;	//必修环节-学年
+	optional string bxhj_Semester	= 52;	//必修环节-学期
+	optional string StudentNameEng = 53;	//英文姓名
+	optional string Grade = 54;			//年级
+	optional string notifyback = 55;//复学文号
+	optional string NotifyDelay = 56;//延期毕业文号
+	optional string notifysuspand = 57;//休学文号
+	optional int32 School_Status = 58;//在校状态
+	optional string	AcdemySimpleName = 59;//学院简称
+	optional string major1 = 60;//专业简称
+}
+
+message StudentInfoEx_AHCJDX
+{
+	optional int32 userid = 1;				//打印系统用户id
+	optional string studentname = 2;		//姓名
+	optional string studentcode = 3;		//学号
+	optional int32 RequiredLession = 4;		//必修课数量
+	optional int32 PublicSleLession = 5;	//公共选修课数量
+	optional int32 PublicBaseLession = 6;	//公共基础课数量
+	optional int32 SelectLession = 7;		//选修数量
+	optional int32 PraticeLession = 8;		//实践教学数量
+	optional int32 MajorLession = 9;		//专业方向课数量
+	optional int32 MajorBaseLession = 10;	//专业基础课数量
+	optional int32 DegreeLession = 11;		//学位课数量
+	optional double HaveGetCredit = 12;		//已获得学分
+	optional string AcademyComment = 13;	//系部意见
+	optional double ACDate = 14;			//系部意见的评价时间
+	optional string SchoolComment = 15;		//教务处审核
+	optional double AverageGpa = 16;		//平均绩点
+	optional double AverageScore = 17;		//平均成绩
+	optional double AverageScoreEx = 18;	//加权平均成绩
+	optional string ViolationLission = 19;	//考试违规科目，用|分隔，如（语言|数学|英文）
+	optional string GraComment = 20;		//毕业结论，如：毕业
+	optional string GraDesTitle = 21;		//毕业设计标题
+	optional string GraDesScore = 22;		//毕业设计成绩
+	optional double GraduateAllCredit = 23;	//毕业应取得总学分
+	optional string PhotoDir = 24;			//学生照片所在目录(如：C:\Photo)
+	optional string PhotoName = 25;			//学生照片文件名(如：123.jpg)
+	optional bytes Photo = 26;				//学生照片(可以以文件形式提供,见PhotoDir和PhotoName)
+	optional string Comment = 27;			//备注信息
+}
+
+//在校证明-安徽财经大学
+message AtSchoolInfo_AHCJDX
+{
+	optional int32 userid = 1;			//打印系统用户id
+	optional string title = 2;			//证明标题
+	optional int32 SchoolYear = 3;		//学生学届
+	optional string studentcode = 4;	//学号
+	optional string studentname = 5;	//姓名
+	optional string studentname_eng = 6;//学生英文名
+	optional string sex = 7;			//性别
+	optional string sex_eng = 8;		//性别英文
+	optional string school = 9;			//学院
+	optional string school_eng = 10;	//学院英文名
+	optional string academy = 11;		//学院
+	optional string academy_eng = 12;	//学院英文名
+	optional string major = 13;			//专业
+	optional string major_eng = 14;		//专业英文名
+	optional string majorsub = 15;		//专业
+	optional string majorsub_eng = 16;	//专业英文名
+	optional string class = 17;			//班级
+	optional string class_eng = 18;		//班级英文名
+	optional string schoolLength = 19;	//学制，如：【4】年
+	optional string eduLevel = 20;		//培养层次：如：本科
+	optional string eduLevel_eng = 21;	//培养层次(英文)
+	optional string IDCode = 22;		//身份证号
+	optional int32 schoolstart = 23;	//入学年份
+	optional string paperdept = 24;		//发证部门
+	optional int32 paperyear = 25;		//证件年份
+	optional string PaperBatchNum = 26;	//证件批号	
+}
+
+//学生信息(用于成绩打印)-安徽财经大学
+message StudentInfo_AHCJDX
+{
+	optional int32 userid = 1;			//打印系统用户id
+	optional string studentname = 2;	//姓名
+	optional string studentcode = 3;	//学号
+	optional string studentCardId = 4;	//一卡通卡号
+	optional string studentCardPwd = 5;	//一卡通密码
+	optional string studentIdNo = 6;	//身份证号
+	optional string studentDiplomaNo = 7;	//毕业证号
+	optional string StudentDegreeNo = 8;	//学位证号
+	optional string Address = 9;		//家庭住址
+	optional string sex = 10;			//性别
+	optional string Nation = 11;		//民族
+	optional string edulevel = 12;		//培养层次(学历)
+	optional string eduDegree = 13;		//学位
+	optional int32 schoolcode = 14;		//学校学校代码
+	optional string school = 15;		//学校名
+	optional int32 academycode = 16;	//学院代码
+	optional string academy = 17;		//学院名
+	optional int32 majorcode = 18;		//专业代码
+	optional string major = 19;			//专业名
+	optional int32 majorsubcode = 20;	//专业方向代码
+	optional string majorsub = 21;		//专业方向名
+	optional int32 classcode = 22;		//班级代码
+	optional string class = 23;			//班级
+	optional int32 SchoolYear = 24;		//学届
+	optional string schoollength = 25;	//学制
+	optional string leaveschoolinfo = 26;	//离校原因
+	optional double schoolstartdate = 27;	//入学时间
+	optional double leaveschooldate = 28;	//离校时间
+	optional string statevalue = 29;		//状态:未知/在校/毕业/肄业/休学/其他
+	optional int32 state = 30;				//状态:0-未知；1-在校；2-毕业；3-肄业；4-休学；5-其他
+	optional StudentInfoEx_AHCJDX infoex = 31;		//学生扩展信息
+}
+//打印补助类型
+enum PaperAllowanceType
+{	
+	PAT_FirstPrintFree = 0;		//首次打印免费
+	PAT_AllowanceFree = 1;		//打印免费(次数)
+	PAT_AllowanceMoney = 2;		//补助金额
+	PAT_AllowancePage = 3;		//补助页数
+	PAT_NoAllowance = 4;		//不启用补助	
+}
+
+enum PAPER_PRICE_TYPE
+{
+	PAPER_PRICE_NULL = 0;	//未知
+	PAPER_PRICE_TRANSCRIPT = 1;	//成绩单费率
+	PAPER_PRICE_PAPER = 2; //证件证明	
+	PAPER_PRICE_NOTICE = 3;	//发布公告
+}
+
+message PricePolicy
+{
+	//费率类型
+	optional PAPER_PRICE_TYPE price_type = 1;  //证件费率类型
+	//价格信息
+	optional double price = 2;				//费率
+	//补助信息
+	optional PaperAllowanceType allowance_type = 3;		//补助类型
+	optional double AllowanceMoney = 4;	//补助金额
+	optional int32 AllowancePage = 5;		//补助页数
+	optional int32 PrintedCount = 6;		//已经打印份数
+	optional int32 PrintFreeCount = 7;		//免费打印份数
+	optional double LeftAllowanceMoney = 8;	//剩余补助金额
+	optional int32 LeftAllowancePage = 9;		//剩余补助页数
+}
+
+enum Printer_Print_Quality
+{
+	Print_Quality_Auto = 0;		//自动选择
+	Print_Quality_Low = 1;		//低质量
+	Print_Quality_Medium = 2;	//普通质量
+	Print_Quality_High = 3;		//高质量
+}
+
+enum Paper_State
+{
+	Paper_State_Disable = 0;	//禁用
+	Paper_State_Enable = 1;		//启用C++处理模板
+	Paper_State_Enable_Custom = 2;	//启用自定义模板
+}
+
+message PaperPrintParams
+{
+	required string		PageType			= 1;		//纸型：如A4		
+	required int32		PaperSize			= 2;		//纸型代码：如A4是9，参考数据表t_s_PaperType		
+	required int32		Orientation			= 3;		//打印方向，1-竖打，2-横打	
+	required int32		Copies				= 4;		//一次打印的份数，默认1份	
+	required int32		Color				= 5;		//彩色打印，1-黑白，2-彩色	
+	required int32		DoublePrint			= 6;		//双面打印，1-单面打印，2-双面长边，3-双面短边	
+	optional int32		PaperSource			= 7;  		//打印纸盒选择,参考Printer_Paper_Source
+	optional Printer_Print_Quality		PrintQuality	= 8;		//打印质量
+	optional bool		Snapshoot			= 9;		//打印是否保留快照：0-不保留，1-保留
+	optional string 	SnapshootBaseUrl	= 10;		//打印快照扫码验证的基本URL
+}
+
+message PaperFormworkContentReq
+{
+	required int32		user_id			= 1;		//用户的id
+	required int32		PaperCode		= 2;		//证件模板代码
+	optional string		PaperName		= 3;		//证件模板显示名称
+	optional int32		PaperState		= 4;		//证件模板状态
+	required string		PaperHtmlContent	= 5;		//证件模板Html内容
+}
+
+//自助缴费、代缴费类型信息
+message BillPaymentInfo
+{
+	required int32 type_id = 1;		//类型ID
+	required string type_name = 2;	//类型名称
+	required double should_spend = 3;	//缴费金额
+	optional double actual_spend = 4;	//实际支付
+	optional double createDate = 5;	//创建日期
+	optional double payDate = 6;	//支付日期
+	optional int32 state = 7;		//支付状态，0-未支付，1-支付成功
+	optional string comment = 8;	//说明与注释
+	
+	//用户信息
+	required string account = 9;	//账号
+	optional string realname = 10;	//姓名
+	optional string cardno = 11;		//卡号
+	optional string studentcode = 12;	//学号
+	optional string academy = 13;	//学院
+	optional string major = 14;		//专业
+	optional string class = 15;		//班级
+	
+	//扣费记录
+	optional string guid = 16;		//日志guid
+	optional int32 ack = 17;		//扣费回执，0-成功，1-失败
+}
+
+message BillPaymentInfoList
+{
+	repeated BillPaymentInfo list = 1;	//自助缴费、代缴费类型信息列表
+}
+
+
+//成绩单类型
+enum TRANSCRIPT_TYPE
+{
+	TRANSCRIPT_ALL = 0;			//所有考试
+	TRANSCRIPT_FINALEXAM = 1;	//期未考试
+	TRANSCRIPT_MIDTERM = 2;		//期中考试
+	TRANSCRIPT_NORMAL = 3;		//普通测试
+	TRANSCRIPT_OTHER = 4;		//其它测试
+}
+
+//课程属性
+enum COURSEATTRIBUTE
+{
+	COURSEATTRIBUTE_UNKNOW=0;		//未知属性
+	COURSEATTRIBUTE_OBLIGATORY =1;	//必修课
+	COURSEATTRIBUTE_ELECTIVE=2;		//选修课
+	COURSEATTRIBUTE_PUBLICELECTIVE=3;		//公选课
+	COURSEATTRIBUTE_ELECTIVE2=4;	//任选课
+	COURSEATTRIBUTE_PRACTICE=5;		//实践课
+	COURSEATTRIBUTE_OTHER=6;		//其他类型课程
+}
+
+//课程成绩
+message CourseScore
+{
+	optional int32 indexid = 1;			//id
+	optional string coursename = 2;		//课程名称
+	optional string coursenameeng = 3;	//课程英文名称
+	optional int32 courseattribute = 4;	//课程属性：1-必修，2-选修，3-公选，4-任选，5-实践，6-其他,  (参考COURSEATTRIBUTE)
+	optional string courseattributevalue = 5;	//课程属性值：必修/选修/公选/任选/实践/其他,  (参考COURSEATTRIBUTE)
+	optional double StartTime = 6;		//开课时间
+	optional double ExamTime = 7;		//考试时间
+	optional int32 lessonlenth = 8;		//课程总学时
+	optional string teachername = 9;	//教师姓名
+	optional double credit = 10;		//学分
+	optional double score = 11;			//成绩
+	optional string score2 = 12;		//成绩不是以数字来评定的,可以是优,良,及格,不及格等
+	optional double scoreBk = 13;		//补考成绩
+	optional string scoreBk2 = 14;		//补考成绩不是以数字来评定的,可以是优,良,及格,不及格等
+	optional double scoreCx =15;		//重修成绩
+	optional string scoreCx2 = 16;		//重修成绩不是以数字来评定的,可以是优,良,及格,不及格等
+	optional double GPA = 17;			//学分绩点
+	optional string comment = 18;		//说明与注释
+	optional int32 CourseType = 19;		//课程类别(01-公共选修课/02-公共基础课/03-专业课/04-专业基础课/06-专业限选课/07-专业任选课/08-实践课/10-学科平台课/11-跨学科选修)
+	optional string CourseNo = 20;		//课程编号
+	optional int32 cxbj =21;//重修标记 0.0-非重修，1.0-重修
+	optional string schoolyear = 22;	//学年
+	optional string semester = 23;		//学期
+	optional string semestereng = 24;	//英文学期
+	optional string ExamProperty = 25;//考试性质
+	optional string IsDeferred = 26;//是否缓考
+}
+
+//成绩列表
+message CourseScoreList
+{
+	repeated CourseScore list = 1;		//成绩列表
+}
+
+//成绩单,这个结构体保存了一个学期成绩单的所有信息.
+message Transcript
+{
+	optional int32 id = 1;				//id
+	optional string transcriptdept = 2;		//成绩单所属部门,可以是学生班级,学院
+	optional int32 schoolyearfrom = 3;		//本成绩的学年起始年
+	optional int32 schoolyearto = 4;		//本成绩的学年结束年
+	optional int32 semester = 5;			//学期号:1或者2
+	optional int32 transcripttype = 6;		//成绩类型：0-所有考试,  1-期末，2-期中，3-普通测试，4-其他测试, (参考TRANSCRIPT_TYPE)
+	optional string transcripttypevalue = 7;		//成绩类型文字描述：0-所有考试,  1-期末，2-期中，3-普通测试，4-其他测试, (参考TRANSCRIPT_TYPE)
+	optional string comment = 8;		//注释与说明
+	optional double createon = 9;			//创建时间
+	optional string SchoolYear = 10;		//学年2010-2011
+	optional CourseScoreList coursescorelist = 11;		//成绩列表
+}
+
+message OtherExam
+{
+	optional int32 id = 1;//id
+	optional string studentcode = 2;//学号
+	optional string examtype = 3;//考试种类
+	optional string examscore = 4;//考试分数
+	optional string examtypeeng = 5;//考试种类英文
+	optional string examscoreeng = 6;//考试分数英文
+}
+//培养环节课程
+message RingCert
+{
+	optional int32 id = 1;//id
+	optional string studentcode = 2;//学号
+	optional string ringname = 3;//环节名称
+	optional string ringno = 4;//环节编码
+	optional string  ispass = 5;//是否通过
+	optional string schoolyear = 6;//年份
+	optional string semester = 7;//学期
+	optional int32 credit = 8;//学分
+}
+
+//一张成绩单的所有信息, 可能包含多个学期多个学年的成绩
+message TranscriptList
+{
+	optional string studentname = 1;		//学生姓名
+	optional string studentcode = 2;		//学生学号
+	optional string studentcard = 3;		//学生一卡通卡号
+	optional string studentdept = 4;		//学生部门,可以是学院,专业,班级
+	optional TranscriptPolicy policy = 5;	//成绩单打印布局策略
+	repeated Transcript list = 6;			//成绩列表
+	repeated OtherExam Otherlist = 7;
+	repeated SchoolChange schoolchangelist = 8;//学籍异动
+	repeated RingCert ringcertlist = 9;			//培养环节课程
+}
+
+//成绩单列表，可能包含多种成绩单
+message TranscriptListMulit
+{
+	repeated TranscriptList list = 1;			//成绩列表
+}
+
+//成绩单打印补助类型
+enum TranscriptAllowanceType
+{	
+	TAT_FirstPrintFree = 0;		//首次打印免费
+	TAT_AllowanceFree = 1;		//打印免费(次数)
+	TAT_AllowanceMoney = 2;		//补助金额
+	TAT_AllowancePage = 3;		//补助页数
+	TAT_NoAllowance = 4;		//不启用补助	
+}
+
+//成绩单打印布局策略
+message TranscriptPolicy
+{
+	//模板编号
+	optional int32 code = 1;			//模板编号
+	
+	//以下是激活显示的元素
+	optional int32 active_title = 2;			//成绩单标题
+	optional int32 active_twodimensioncode = 3;	//二维码
+	optional int32 active_water = 4;			//水印
+	optional int32 active_pagenumber = 5;		//页码
+	optional int32 active_printdate = 6;		//打印日期
+	optional int32 active_signature = 7;		//教务处处长签名
+	optional int32 active_stamp = 8;			//教务处（盖章）
+	optional int32 active_everypagefooter = 9;	//每页显示底部信息
+	
+	//以下是显示元素的具体信息	
+	optional string title = 10;				//成绩单标题
+	optional string twodimensioncode = 11;	//二维码字符串
+	optional string water = 12;				//水印字符串
+	optional string pagenumber = 13;		//页码格式(如[第1页,共2页],[1/2])
+	optional string printdate = 14;			//打印日期格式(如[2014年2月25日],[2014-02-25],[2014/02/25])
+	optional string signature = 15;			//教务处处长签名(图片文件名)
+	optional string signature_title = 16;	//教务处处长签名(标题)
+	optional string stamp  = 17;			//教务处（盖章）(图片文件名)
+	optional string stamp_title  = 18;		//教务处（盖章）(标题)
+	optional string picdir  = 19;			//成绩打印图片目录
+	optional string picurl  = 20;			//成绩打印图片url
+	optional string papername = 21;			//证件名字
+	
+	//学生个人信息
+	optional StudentInfo studentinfo = 22;	//学生信息
+	optional bytes	dynamic_data = 23;		//动态信息
+	
+	optional Paper_State  state = 24;				//证件状态,0-禁用,1-启用,2-启用自定义模板
+	
+	optional PaperPrintParams PrintParams	= 25;		//证件打印参数
+	optional PricePolicy PricePolicy = 26;			//证件费率
+}
+
+//学生信息扩展信息(用于成绩和离校单打印和在校证明)
+message StudentInfoEx
+{
+	optional int32 userid = 1;			//打印系统用户id
+	optional string studentname = 2;	//姓名
+	optional string studentcode = 3;	//学号
+	optional int32 SchoolYear = 4;		//学生学届
+	optional int32 SchoolLength = 5;	//学制，【4】年
+	optional string EduLevel = 6;	//培养层次 （本科）
+	optional int32 RequiredLession = 7;	//必修课数量
+	optional int32 PublicSleLession = 8;	//公共选修课数量
+	optional int32 PublicBaseLession = 9;	//公共基础课数量
+	optional int32 SelectLession = 10;		//选修数量
+	optional int32 PraticeLession = 11;	//实践教学数量
+	optional int32 MajorLession = 12;		//专业方向课数量
+	optional int32 MajorBaseLession = 13;	//专业基础课数量
+	optional int32 DegreeLession = 14;		//学位课数量
+	optional double HaveGetCredit = 15;		//已获得学分
+	optional string AcademyComment = 16;		//系部意见
+	optional double ACDate = 17;		//系部意见的评价时间
+	optional string SchoolComment = 18;			//教务处审核
+	optional string GraDesTitle = 19;		//毕业设计标题
+	optional double AverageGpa = 20;			//平均绩点
+	optional double AverageScore = 21;	//平均成绩
+	optional double AverageScoreEx = 22;	//加权平均成绩
+	optional string ViolationLission = 23;	//考试违规科目，用|分隔，如（语言|数学|英文）
+	optional string GraComment = 24;	//毕业结论，如：毕业
+	optional bytes Photo = 25;			//学生照片
+	optional string PoliticalStatus = 26;//政治面貌
+	optional double PoliticalEntryDate = 27;//参加政治团体时间
+	optional string CollegeEntryExamScores = 28;//高考分数
+	optional string GraDesScore = 29;//毕业设计分数
+	optional string MinorMajor = 30;//辅修专业
+	optional string SeconedDegree = 31;//第二学位
+	optional string LeavingCertNo = 32;//结业证书编号
+	optional string MinorMajorCertNo = 33;//辅修证书编号
+	optional string SeconedDegreeCertNo = 34;//第二学位证书编号
+	optional double LeavingCertDate = 35;//结业证书发证日期
+	optional double GraduateCertDate = 36;//毕业证书发证日期
+	optional double DegreeCertDate = 37;//学位证书发证日期
+	optional double MinorMajorDate = 38;//辅修证书发证日期
+	optional double SeconedCertDate = 39;//第二学位发证日期	
+}
+
+//在校证明
+message AtSchoolInfo
+{
+	optional int32 userid = 1;			//打印系统用户id
+	optional string studentname = 2;	//姓名
+	optional string studentname_eng = 3;//学生英文名
+	optional string studentcode = 4;	//学号
+	optional string title = 5;			//证明标题
+	optional int32 year = 6;			//学生学届
+	optional string sex = 7;			//性别
+	optional string sex_eng = 8;		//性别英文
+	optional string academy = 9;		//学院
+	optional string academy_eng = 10;	//学院英文名
+	optional string major = 11;			//专业
+	optional string major_eng = 12;		//专业英文名
+	optional string class = 13;			//班级
+	optional string class_eng = 14;		//班级英文名
+	optional int32 schoolLength = 15;	//学年，如：【4】年
+	optional string eduLevel = 16;		//培养层次：如：本科
+	optional string eduLevel_eng = 17;	//培养层次(英文)
+	optional string IDCode = 18;		//身份证号
+	optional int32 schoolstart = 19;	//入学年份
+	optional string paperdept = 20;		//发证部门
+	optional int32 paperyear = 21;		//证件年份
+	optional string PaperBatchNum = 22;	//证件批号	
+}
+message	SchoolCard
+{
+	optional int32 id =1;
+	optional string studentcode = 2;//学号
+	optional string inputtablepage = 3;//录表简册行
+	optional string examno =4;//考生号
+}
+message StudentFamilyMember
+{
+	optional int32 id  = 1;
+	optional string StudentCode = 2;
+	optional string FamliyMemberName = 3;
+	optional string Relationship = 4;
+	optional string WorkCompany = 5;
+	optional string CompanyZipCode = 6;
+	optional string FamliyTelephonneNo = 7;
+}
+message LearnResume
+{
+	optional int32 id = 1;
+	optional double StudyBeginDate = 2;//学习开始时间
+	optional double StudyEndDate = 3;//学习结束时间
+	optional string GraduateSchool = 4;//毕业学校
+	optional string Post = 5;//职位
+}
+message SchoolChange
+{
+	optional int32 id = 1;
+	optional string studentcode = 2;//学号
+	optional string SchoolChangeType = 3;//学籍异动类别
+	optional double ChangeDate = 4;//异动时间
+	optional string XN = 5;//异动学年
+	optional int32 XQ = 6;//异动学期
+}
+message RewardAndPunshment
+{
+	optional int32 id = 1;
+	optional string studentcode = 2;//学号
+	optional int32 ReaAndPunType = 3;//奖惩类型
+	optional string ReAndPunName = 4;//奖惩名称
+	optional string ReAndPunReason = 5;//奖惩原因
+	optional string ReAndPunNo = 6;//奖惩号
+	optional double	ReAndPunDate = 7;//奖惩时间 
+	
+}
+//学生信息(用于成绩和离校单打印和在校证明)
+message StudentInfo
+{
+	optional int32 userid = 1;			//打印系统用户id
+	optional string studentname = 2;	//姓名
+	optional string studentcode = 3;	//学号
+	optional string studentCardId = 4;	//一卡通卡号
+	optional string studentCardPwd = 5;	//一卡通密码
+	optional string studentIdNo = 6;	//身份证号
+	optional string studentDiplomaNo = 7;	//毕业证号
+	optional string Address = 8;	//家庭住址
+	optional int32 sex = 9;				//性别
+	optional string edulevel = 10;		//培养层次(学历)
+	optional string eduDegree = 11;		//学位
+	optional double GraduateAllCredit = 12;		//毕业应取得总学分
+	optional int32 schoolcode = 13;		//学校学校代码
+	optional string schoolname = 14;		//学校名
+	optional int32 academycode = 15;		//学院代码
+	optional string academy = 16;		//学院名
+	optional string majorcode = 17;		//专业代码
+	optional string major = 18;			//专业名
+	optional string classcode = 19;		//班级代码
+	optional string class = 20;			//班级
+	optional string schoollength = 21;	//学制
+	optional string leaveschoolinfo = 22;	//离校原因
+	optional double schoolstartdate = 23;	//入学时间
+	optional double leaveschooldate = 24;	//离校时间
+	optional int32 usertype = 25;			//用户类型(1=学生; 2=教职工; 3=其它)
+	optional string usertypevalue = 26;		//用户类型字符串(学生/教职工/其它)
+	optional string edustate = 27;			//学籍状态(如：在校、开除、参军、休学）。
+	optional string statevalue = 28;		//状态:未知/在校/毕业/肄业/休学/其他
+	optional int32 state = 29;		//状态:0-未知；1-在校；2-毕业；3-肄业；4-休学；5-其他
+	optional StudentInfoEx infoex = 30;		//学生扩展信息
+	optional AtSchoolInfo atschoolinfo = 31;	//在校证明
+	optional string StudentDegreeNo = 32;	//学位证号
+	optional string Nation = 33;		//民族
+	optional int32 majorsubcode = 34;	//专业方向代码
+	optional string majorsub = 35;		//专业方向名
+	optional int32 SchoolYear = 36;		//学届
+	repeated StudentFamilyMember familymemberlist = 37;//学生家庭信息
+	optional string studentnameeng = 38;//学生英文姓名
+	optional double birthdate = 39;//出生日期
+	optional string placeoforigin = 40;//籍贯
+	optional string hight = 41;//身高
+	optional SchoolCard schoolcard = 42;//学籍卡
+	optional string TelephoneNo = 43;//家庭电话
+	optional string zipcode = 44;//家庭邮编
+	repeated LearnResume learnresumelist = 45;//学习简历
+	repeated SchoolChange schoolchangelist = 46;//学籍异动
+	repeated RewardAndPunshment reawardandpunshmentlist= 47;//奖惩情况
+	optional string notifyback = 48;//复学文号
+	optional string NotifyDelay = 49;//延期毕业文号
+	optional string notifysuspand = 50;//休学文号
+	repeated RingCert ringcertlist = 51;//培养环节
+	optional int32	G_Status = 52;//毕业状态
+	optional int32	S_Status = 53;//学籍状态
+	optional int32	School_Status = 54;//在校状态
+	optional string AcademySimpleName = 55;//学院简称
+	optional string Major1 = 56;//专业简称
+	optional string Grade = 57;//年级
+	
+}
+
+//学生信息LIST
+message StudentInfoList
+{
+	repeated StudentInfo list = 1;	//学生列表
+}
+
+//证件打印布局策略
+message PaperPolicy
+{
+	//模板编号
+	optional int32 code = 1;			//模板编号
+	
+	//以下是激活显示的元素
+	optional int32 active_title = 2;			//成绩单标题
+	optional int32 active_twodimensioncode = 3;	//二维码
+	optional int32 active_water = 4;			//水印
+	optional int32 active_pagenumber = 5;		//页码
+	optional int32 active_printdate = 6;		//打印日期
+	optional int32 active_signature = 7;		//教务处处长签名
+	optional int32 active_stamp = 8;			//教务处（盖章）
+	optional int32 active_everypagefooter = 9;	//每页显示底部信息
+	
+	//以下是显示元素的具体信息	
+	optional string title = 10;				//证件单标题
+	optional string twodimensioncode = 11;	//二维码字符串
+	optional string water = 12;				//水印字符串
+	optional string pagenumber = 13;		//页码格式(如[第1页,共2页],[1/2])
+	optional string printdate = 14;			//打印日期格式(如[2014年2月25日],[2014-02-25],[2014/02/25])
+	optional string signature = 15;			//教务处处长签名(图片文件名)
+	optional string signature_title = 16;	//教务处处长签名(标题)
+	optional string stamp  = 17;			//教务处（盖章）(图片文件名)
+	optional string stamp_title  = 18;		//教务处（盖章）(标题)
+	optional string picdir  = 19;			//图片目录
+	optional string picurl  = 20;			//图片url
+	optional string papername = 21;			//证件名字
+	optional Paper_State  state = 22;				//证件状态,0-禁用,1-启用,2-启用自定义模板
+	
+	optional PaperPrintParams PrintParams	= 23;		//证件打印参数
+	optional PricePolicy PricePolicy = 24;			//证件费率
+}
+
+//证件打印布局策略LIST
+message PaperPolicyList
+{
+	optional StudentInfo studentinfo = 1;	//学生信息
+	optional bytes	dynamic_data = 2;		//动态信息
+	repeated PaperPolicy list = 3;	//证件打印布局策略
+}
+
+//公告打印
+message NoticePublish
+{
+	optional int32 id = 1;			//数据库表中的id
+	optional string title = 2;		//标题
+	optional string Url = 3;		//外部链接
+	optional string Content = 4;	//公告内容
+	optional string Subject = 5;	//公告主题
+	optional int32 CreateBy = 6;	//公告发布者
+	optional double CreateOn = 7;	//公告发布时间
+	optional double EndOn = 8;		//公告有效截止时间
+	optional string ResourceDir = 9;	//额外资源总目录
+	optional string ResourcePath = 10;	//额外资源子目录
+	optional string deptname = 11;		//发布部门
+	optional string stamp = 12;		//公章图片名
+	optional string picdir  = 13;	//图片目录
+	optional string picurl  = 14;	//图片url
+	optional int32 State = 15;		//状态
+}
+
+//公告打印列表
+message NoticePublishList
+{
+	repeated NoticePublish list = 1;	//公告打印
+}
+
+//委托成绩打印列表
+message EntrustTranscriptList
+{
+	repeated TranscriptList list = 1;	//委托成绩打印列表
+}
+
+//委托证件打印列表
+message EntrustPaperPolicyList
+{
+	repeated PaperPolicyList list = 1;	//委托证件打印列表
+}
+
+enum PrintSnapshootType
+{
+	PrintSnapshootType_Null = 0;		//未知
+	PrintSnapshootType_NormalPrint = 1;	//普通客户端打印
+	PrintSnapshootType_CloudPrint = 2;	//WEB云提交打印
+	PrintSnapshootType_UsbPrint = 3;	//USB打印
+	PrintSnapshootType_Transcript = 4;	//成绩打印
+	PrintSnapshootType_Paper = 5;		//证件打印
+	PrintSnapshootType_Notice = 6;		//公告打印
+}
+
+enum PrintSnapshootFileState
+{
+	PrintSnapshootFileState_Null = 0;		//未知
+	PrintSnapshootFileState_NoFile = 1;		//未保留打印快照
+	PrintSnapshootFileState_HaveFile = 2;	//保留打印快照
+	PrintSnapshootFileState_Deleted = 3;	//打印快照被删除
+}
+
+message PrintSnapshootInfo
+{
+	required PrintSnapshootType type = 1;
+	required string guid = 2;
+	optional int32 prt_id = 3;
+	optional int32 user_id = 4;
+	optional string SnapshootDir = 5;
+	optional string SnapshootFileName = 6;
+	optional string SnapshootURL = 7;
+	optional string SnapshootLocalURL = 8;
+	optional PrintSnapshootFileState FileState = 9;
+	optional string SnapshootLocalFilePath = 10;
+	optional bool Snapshoot = 11;		//打印是否保留快照：0-不保留，1-保留
+}

@@ -1,0 +1,132 @@
+package isafetec;  
+      
+message datastream 
+{  
+     required int32 col = 1;
+     required int32 row = 2;
+     repeated string val = 3;  
+}  
+
+//管理机登陆
+message MangerLogon
+{
+	optional int32 id = 1;		//id
+	optional string name = 2;	//用户名
+	optional string pwd = 3;	//密码
+}
+
+message AdoConnect
+{
+	optional string ip = 1;
+	optional string port = 2;
+	optional string user = 3;
+	optional string pwd = 4;
+	optional string db = 5;
+}
+
+message MangerCheckUserResult
+{
+	optional int32 id = 1;		//id
+	optional AdoConnect ado = 2;	
+}
+
+//请求日志文件
+message ReqLogFile
+{
+	optional int32 id = 1;		//id
+	optional string path = 2;	//用户名
+}
+
+message ReqLogFileList
+{
+	repeated ReqLogFile list = 1;
+}
+
+//策略发生改变
+message PolicyChanged
+{
+	repeated int32 id = 1;
+	optional int32 type = 2;
+	optional int32 policyid = 3;
+}
+
+enum ONLINE_CMD_TYPE
+{
+	CMD_TIP = 0;	//提醒
+	CMD_EXEC = 1;	//执行
+}
+
+//在线命令
+message OnlineCmd
+{
+	optional int32 id = 1;
+	optional ONLINE_CMD_TYPE type = 2;
+	optional string msg = 3; 
+}
+
+message OnlineCmdList
+{
+	repeated OnlineCmd list = 1;
+}
+
+//客户端登陆
+message CltLogon
+{
+	optional int32 id = 1;		//id
+	optional string name = 2;	//用户名
+	optional string pwd = 3;	//密码
+}
+//用户登陆验证信息
+message CltCheckUserResult
+{
+	optional int32 id = 1; 
+	optional int32 role_type = 2;
+}
+
+//客户端本地
+message CltLocalCongfigInfo
+{
+	optional int32 product_code = 1;
+	optional int32 debug_log = 2;
+	optional int32 net_state = 3;
+	optional int32 user_id = 4;
+	optional string user_name = 5;
+	
+}
+
+//产品信息
+//0:no user logon,1:需要用户验证，验证方式是自己的账户，2:集成 ad账户，3:第三方账户
+enum UserLogonType
+{	
+	NO_CHECK = 0;
+	CHECK_BY_IST = 1;
+	CHECK_BY_AD = 2;
+	CHECK_BY_OTHER = 3;
+}
+
+message ProductInfo
+{
+	optional uint32			product_code = 1;
+	optional uint32			sub_code = 2;
+	optional bool			demo_version = 3;
+	optional int32			user_count = 4;
+	
+	optional UserLogonType	user_check_type = 5;
+	optional bool			need_ui_process = 6;		//0,不需要，1需要
+	optional bool			logon_atonce = 7;			//通知用户立即登陆
+	optional string			version_info= 8;
+	optional string			ad_server = 9;
+	optional string			other_server = 10;
+}
+//管理机关注客户端状态事件
+message MgrSubscribeEvent
+{
+	optional	int32 equip_id	= 1 ;
+	optional	int32 user_id	= 2 ;
+	optional	uint32 event_mask = 3;
+}
+
+message MgrSubscribeEventList
+{
+	repeated MgrSubscribeEvent list = 1;
+}

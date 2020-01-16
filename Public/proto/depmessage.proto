@@ -1,0 +1,74 @@
+import "cmmmessage.proto";
+package isafetec; 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// 用户信息
+message UserInfo
+{
+	required int32 id = 1;					// 用户ID
+	optional string username = 2;			// 用户名称
+	optional double birthDay = 3;			// 出生日期
+	optional int32	sex = 4;				// 性别
+	optional string nation = 5;				// 民族
+	optional string record = 6;				// 籍贯
+	optional string polity = 7;				// 政治面貌
+	optional string telephone = 8;			// 电活
+	optional string emailaddr = 9;			// 邮箱地址
+	optional int32 depid = 10;				// 所属部门
+	optional int32 state = 15;				// 用户状态
+
+	optional string AccountName = 11;		// 登录用户名
+	optional string password = 12;			// 用户登录密码
+	optional int32 is_system_user = 14;		// 系统管理用户
+	optional int32 accountid = 13;			// 帐户ID
+	
+	optional int32 BindEquipID = 16;		// 绑定的设备ID
+	optional int32 IsOnline = 17;			// 当前是否在线
+	optional int32 domainId = 18;			// 所属于哪个域
+	optional string card_no = 19;			//卡号
+	
+	optional string id_card_no = 20;		//身份证号
+	optional string citizen_card_no = 21;	//市民卡号	
+	optional string mobile_no = 22;			//移动平台账号
+	
+	//用户绑定机器信息
+	optional string host_name = 23;			//用户绑定机器名
+	optional string host_ip = 24;			//用户绑定机器IP
+}	
+
+//  用户列表
+message UserInfoList
+{
+	repeated UserInfo list = 1;
+}
+
+// 部门信息
+message DepartmentInfo
+{
+	required int32 id = 1;
+	optional int32	pid = 2;
+	optional string name = 3;
+	optional double createby = 4;
+	optional string comment = 5;
+	optional int32 leaderid = 6;
+	optional UserInfoList userlist = 7;
+	optional BaseEquipInfoList devicelist = 8;
+	optional DepartmentInfoList subdeplist = 9;
+	optional int32 usercount = 10;
+	optional int32 devicecount = 11;
+	optional int32 state = 12;
+	optional int32 isdefaultDep = 13;			// 标识是否为默认部门
+}
+
+//  部门信息列表
+message DepartmentInfoList
+{
+	repeated DepartmentInfo list = 1;
+}
+
+//管理机信息
+message ManagerInfo
+{
+	optional UserInfoList	user_list = 1;	//可以登录的用户列表
+	optional bool			on_server = 2;			//和服务器在同一台机器上
+}

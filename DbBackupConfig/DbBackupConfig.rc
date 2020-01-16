@@ -1,0 +1,547 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// ÖÐÎÄ(ÖÐ»ªÈËÃñ¹²ºÍ¹ú) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#include ""res\\DbBackupConfig.rc2""  // ·Ç Microsoft Visual C++ ±à¼­µÄ×ÊÔ´\r\n"
+    "#include ""l.CHS\\afxres.rc""      // ±ê×¼×é¼þ\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\DbBackupConfig.ico"
+IDI_VIEW                ICON                    "res\\view.ico"
+IDI_OK                  ICON                    "res\\icon1.ico"
+IDI_CANCLE              ICON                    "res\\icon2.ico"
+IDI_BAK                 ICON                    "res\\bak.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "¹ØÓÚ DbBackupConfig"
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
+    LTEXT           "DbBackupConfig£¬1.0 °æ",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2012",IDC_STATIC,42,26,114,8
+    DEFPUSHBUTTON   "È·¶¨",IDOK,113,41,50,14,WS_GROUP
+END
+
+IDD_PAGE_BACKUP DIALOGEX 0, 0, 287, 241
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "±¸·Ý"
+FONT 9, "ËÎÌå", 400, 0, 0x86
+BEGIN
+    EDITTEXT        IDC_EDIT9,54,14,219,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT1,54,31,219,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT5,54,48,219,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT6,54,65,219,14,ES_PASSWORD | ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BUTTON1,254,104,19,13
+    CONTROL         "ÆôÓÃÈÎÎñÄ£Ê½±¸·Ý",IDC_UseTarget,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,140,83,11
+    CONTROL         "Ã¿Ìì£º",IDC_RADIOD,"Button",BS_AUTORADIOBUTTON | WS_DISABLED | WS_GROUP,20,156,32,12
+    CONTROL         "Ã¿ÖÜ£º",IDC_RADIOW,"Button",BS_AUTORADIOBUTTON | WS_DISABLED,20,176,36,10
+    CONTROL         "Ã¿ÔÂ£º",IDC_RADIOM,"Button",BS_AUTORADIOBUTTON | WS_DISABLED,20,194,34,11
+    CONTROL         "",IDC_DATE_DAY,"SysDateTimePick32",DTS_UPDOWN | WS_DISABLED | WS_TABSTOP | 0x8,58,155,83,13
+    COMBOBOX        IDC_ComboWeek,58,174,83,99,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_DATETIMEPICKER1,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_DISABLED | WS_TABSTOP | 0x8,141,174,83,12
+    EDITTEXT        IDC_EDIT_MONTH,68,192,50,13,ES_AUTOHSCROLL | ES_NUMBER | WS_DISABLED
+    CONTROL         "",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | UDS_AUTOBUDDY | UDS_ARROWKEYS | WS_DISABLED,118,192,11,13
+    CONTROL         "",IDC_DATETIMEPICKER2,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_DISABLED | WS_TABSTOP | 0x8,141,192,83,13
+    DEFPUSHBUTTON   "Á¢¼´±¸·Ý",IDOK,201,219,77,14
+    EDITTEXT        IDC_EDIT4,54,104,200,13,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Ìì",IDC_STATIC_AA,131,195,8,8,WS_DISABLED
+    GROUPBOX        "Êý¾Ý¿âÐÅÏ¢",IDC_STATIC,7,2,272,85
+    GROUPBOX        "±¸·ÝÉèÖÃ",IDC_STATIC,7,127,271,86
+    GROUPBOX        "´æ´¢Â·¾¶ÉèÖÃ",IDC_STATIC,7,90,271,34
+    LTEXT           "Â·¾¶£º",IDC_STATIC,20,106,25,8
+    LTEXT           "Êý¾Ý¿â£º",IDC_STATIC,20,34,33,8
+    LTEXT           "ÓÃ»§Ãû£º",IDC_STATIC,20,51,33,8
+    LTEXT           "ÃÜÂë£º",IDC_STATIC,20,68,34,8
+    LTEXT           "·þÎñÆ÷£º",IDC_STATIC,20,17,32,8
+    LTEXT           "µÚ",IDC_STATIC_AA2,58,195,8,8,WS_DISABLED
+END
+
+IDD_PAGET_RESTORE DIALOGEX 0, 0, 285, 241
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "»¹Ô­/³õÊ¼»¯"
+FONT 9, "ËÎÌå", 400, 0, 0x0
+BEGIN
+    PUSHBUTTON      "...",IDC_BUTTON1,253,191,20,14
+    DEFPUSHBUTTON   "»¹Ô­Êý¾Ý¿â",IDOK,196,211,77,14
+    GROUPBOX        "»¹Ô­ÎÄ¼þ",IDC_STATIC,7,177,272,55
+    EDITTEXT        IDC_EDIT4,54,191,199,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Â·¾¶£º",IDC_STATIC,20,193,25,8
+    EDITTEXT        IDC_EDIT9,54,14,219,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT1,54,31,219,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT5,54,48,219,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT6,54,65,219,14,ES_PASSWORD | ES_AUTOHSCROLL
+    GROUPBOX        "Êý¾Ý¿âÐÅÏ¢",IDC_STATIC,7,2,272,85
+    LTEXT           "Êý¾Ý¿â£º",IDC_STATIC,20,34,33,8
+    LTEXT           "ÓÃ»§Ãû£º",IDC_STATIC,20,51,33,8
+    LTEXT           "ÃÜÂë£º",IDC_STATIC,20,68,34,8
+    LTEXT           "·þÎñÆ÷£º",IDC_STATIC,20,17,32,8
+    PUSHBUTTON      "...",IDC_BUTTON3,253,102,20,14
+    GROUPBOX        "³õÊ¼»¯ÎÄ¼þ",IDC_STATIC,7,89,272,84
+    EDITTEXT        IDC_EDIT10,54,102,199,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Â·¾¶£º",IDC_STATIC,20,104,25,8
+    DEFPUSHBUTTON   "³õÊ¼»¯Êý¾Ý¿â",IDOK2,196,154,77,14
+    EDITTEXT        IDC_EDIT2,54,119,219,30,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | ES_WANTRETURN | WS_VSCROLL
+    LTEXT           "ËµÃ÷£º",IDC_STATIC,20,119,25,8
+END
+
+IDD_PAGE_LOG DIALOGEX 0, 0, 285, 241
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "ÈÕÖ¾"
+FONT 9, "ËÎÌå", 400, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "ä¯ÀÀÈÕÖ¾ÎÄ¼þ",IDC_BUTTON1,201,219,77,14
+    EDITTEXT        IDC_EDIT1,7,7,271,206,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080403a8"
+        BEGIN
+            VALUE "CompanyName", "TODO: <¹«Ë¾Ãû>"
+            VALUE "FileDescription", "TODO: <ÎÄ¼þËµÃ÷>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "DbBackupConfig.exe"
+            VALUE "LegalCopyright", "TODO: (C) <¹«Ë¾Ãû>¡£±£ÁôËùÓÐÈ¨Àû¡£"
+            VALUE "OriginalFilename", "DbBackupConfig.exe"
+            VALUE "ProductName", "TODO: <²úÆ·Ãû>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 936
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 163
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+
+    IDD_PAGE_BACKUP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 278
+        TOPMARGIN, 11
+        BOTTOMMARGIN, 233
+    END
+
+    IDD_PAGET_RESTORE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 278
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 233
+    END
+
+    IDD_PAGE_LOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 278
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 234
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_PAGE_BACKUP DLGINIT
+BEGIN
+    IDC_ComboWeek, 0x403, 7, 0
+0xc7d0, 0xdac6, 0xd5c8, "\000" 
+    IDC_ComboWeek, 0x403, 7, 0
+0xc7d0, 0xdac6, 0xbbd2, "\000" 
+    IDC_ComboWeek, 0x403, 7, 0
+0xc7d0, 0xdac6, 0xfeb6, "\000" 
+    IDC_ComboWeek, 0x403, 7, 0
+0xc7d0, 0xdac6, 0xfdc8, "\000" 
+    IDC_ComboWeek, 0x403, 7, 0
+0xc7d0, 0xdac6, 0xc4cb, "\000" 
+    IDC_ComboWeek, 0x403, 7, 0
+0xc7d0, 0xdac6, 0xe5ce, "\000" 
+    IDC_ComboWeek, 0x403, 7, 0
+0xc7d0, 0xdac6, 0xf9c1, "\000" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "¹ØÓÚ DbBackupConfig(&A)..."
+    IDS_STRING_Cancel       "¹Ø±Õ"
+    IDS_STRINGBackupAndRestore "Êý¾Ý¿â±¸·Ý/»¹Ô­"
+    IDS_STRING_Expain       "ËùÖ¸Â·¾¶ÎªÎÄ¼þ*.mdfºÍ*.ldfËùÔÚµÄÂ·¾¶£¬µ±Ê¹ÓÃCOPYÎÄ¼þÀ´½øÐÐÊý¾Ý¿âÔÚÁ½Ì¨»úÆ÷¼äµÄ×ªÒÆÊ±Ê¹ÓÃ±¾ \n¹¦ÄÜ¡£½¨Òé´ËÁ½¸öÎÄ¼þCOPYµ½MSSQLSERVERÏÂµÄDATAÄ¿Â¼ÖÐ¡£         \r\nSql Server Â·¾¶ \r\n     $:\\Program Files\\Microsoft SQL Server\\MSSQL\\Data"
+    IDS_STRING_Db_ConnetFailed "Á¬½ÓÊý¾Ý¿âÊ§°Ü!"
+    IDS_STRING_Test_Dbversion_failed "¼ì²âÊý¾Ý¿â°æ±¾Ê§°Ü£¡"
+    IDS_STRING_Tip          "ÌáÊ¾"
+    IDS_STRING_Text1        "ÇëÊäÈëÊý¾Ý¿âÅäÖÃÏî"
+    IDS_STRING_Path         "Â·¾¶"
+    IDS_STRING_Text2        "ÇëÖ¸¶¨Êý¾Ý¿â»¹Ô­ÎÄ¼þ"
+    IDS_STRING_Text3        "»¹Ô­Êý¾Ý¿âÊ±¶Ô´ËÊý¾Ý¿âµÄÁ¬½Ó½«¶Ï¿ª,ÊÇ·ñ¼ÌÐø£¿"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STRING_Text4        "Êý¾Ý¿âÃ»ÓÐ´òSP4²¹¶¡£¡"
+    IDS_STRING_Text5        "ÏµÍ³¼ì²âµ½Êý¾Ý¿â·þÎñÆ÷ÉÏÒÑ¾­´æÔÚ¸Ã²úÆ·µÄÊý¾Ý¿â¡£\n½¨ÒéÄúÏÈ±¸·ÝÊý¾Ý¿â£¬È»ºóÔÙ×ö½øÒ»²½²Ù×÷¡£ÊÇ·ñ¼ÌÐø£¿\n\nÈç¹ûÑ¡Ôñ¡°ÊÇ¡±£¬ÏµÍ³½«×Ô¶¯½«Êý¾Ý±¸·Ýµ½¡°C:\\¡±Ä¿Â¼£¬È»ºóÖØÐÂ°²×°Êý¾Ý¿â£¬Ô­ÓÐÊý¾Ý½«±»É¾³ý£¡\nÈç¹ûÑ¡Ôñ¡°·ñ¡±£¬ÏµÍ³½«¼ÌÐøÊ¹ÓÃÏÖÓÐÊý¾Ý¿â£¬Ô­ÓÐÊý¾Ý½«±£Áô¡£"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STRING_Db_Bakup_Failed "½«Êý¾Ý¿â""%s""±¸·Ýµ½""%s""Ê§°Ü£¡"
+    IDS_STRING_CreateDB_Failed "´´½¨Êý¾Ý¿â""%s""Ê§°Ü£¡"
+    IDS_STRING_Restore_DB_Failed "´Ó""%s""»Ö¸´Êý¾Ý¿â""%s""Ê§°Ü£¡"
+    IDS_STRING_Restore_DB_Suc "´Ó""%s""»Ö¸´Êý¾Ý¿â""%s""³É¹¦£¡"
+    IDS_STRING_CreateDBbyScriptFailed "´Ó½Å±¾ÎÄ¼þ""%s""»Ö¸´Êý¾Ý¿â""%s""Ê§°Ü£¡"
+    IDS_STRING_CreateDBbyScriptSucess "´Ó½Å±¾ÎÄ¼þ""%s""»Ö¸´Êý¾Ý¿â""%s""³É¹¦£¡"
+    IDS_STRING_BakUpFileNotExit "ÐèÒª±¸·ÝµÄÊý¾Ý¿â:""%s""²»´æÔÚ!"
+    IDS_STRING_Db_Bakup_Sucess "±¸·ÝÊý¾Ý¿â:""%s""µ½""%s""³É¹¦"
+    IDS_STRING_Choose_Folder "Ñ¡ÔñÎÄ¼þ¼Ð"
+END
+
+#endif    // ÖÐÎÄ(ÖÐ»ªÈËÃñ¹²ºÍ¹ú) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Ó¢Óï(ÃÀ¹ú) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About DbBackupConfig"
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,20,20
+    LTEXT           "DbBackupConfig,1.0 edition",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2012",IDC_STATIC,42,26,114,8
+    DEFPUSHBUTTON   "??",IDOK,113,41,50,14,WS_GROUP
+END
+
+IDD_PAGE_BACKUP DIALOGEX 0, 0, 287, 241
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Backups"
+FONT 9, "??", 400, 0, 0x86
+BEGIN
+    EDITTEXT        IDC_EDIT9,63,11,219,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT1,63,31,219,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT5,63,48,219,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT6,63,65,219,14,ES_PASSWORD | ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BUTTON1,254,104,19,13
+    CONTROL         "Enable task mode backup",IDC_UseTarget,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,140,193,11
+    CONTROL         "Every day:",IDC_RADIOD,"Button",BS_AUTORADIOBUTTON | WS_DISABLED | WS_GROUP,7,156,48,12
+    CONTROL         "Weekly:",IDC_RADIOW,"Button",BS_AUTORADIOBUTTON | WS_DISABLED,7,176,50,10
+    CONTROL         "Monthly:",IDC_RADIOM,"Button",BS_AUTORADIOBUTTON | WS_DISABLED,7,194,47,11
+    CONTROL         "",IDC_DATE_DAY,"SysDateTimePick32",DTS_UPDOWN | WS_DISABLED | WS_TABSTOP | 0x8,58,155,83,13
+    COMBOBOX        IDC_ComboWeek,58,174,83,99,CBS_DROPDOWNLIST | CBS_AUTOHSCROLL | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "",IDC_DATETIMEPICKER1,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_DISABLED | WS_TABSTOP | 0x8,141,174,83,12
+    EDITTEXT        IDC_EDIT_MONTH,68,192,50,13,ES_AUTOHSCROLL | ES_NUMBER | WS_DISABLED
+    CONTROL         "",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | UDS_AUTOBUDDY | UDS_ARROWKEYS | WS_DISABLED,118,192,11,13
+    CONTROL         "",IDC_DATETIMEPICKER2,"SysDateTimePick32",DTS_RIGHTALIGN | DTS_UPDOWN | WS_DISABLED | WS_TABSTOP | 0x8,141,192,83,13
+    DEFPUSHBUTTON   "Immediate Backup",IDOK,210,219,77,14
+    EDITTEXT        IDC_EDIT4,54,104,200,13,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "",IDC_STATIC_AA,131,195,8,8,WS_DISABLED
+    GROUPBOX        "Database Information",IDC_STATIC,7,2,280,84
+    GROUPBOX        "Backup Set",IDC_STATIC,7,127,280,86
+    GROUPBOX        "Set Storage Path",IDC_STATIC,7,90,280,34
+    LTEXT           "Path:",IDC_STATIC,20,106,25,8
+    LTEXT           "Database:",IDC_STATIC,14,34,41,8
+    LTEXT           "UserName:",IDC_STATIC,14,51,41,8
+    LTEXT           "Password:",IDC_STATIC,14,68,34,8
+    LTEXT           "Server:",IDC_STATIC,14,19,32,8
+    LTEXT           "",IDC_STATIC_AA2,58,195,8,8,WS_DISABLED
+END
+
+IDD_PAGE_LOG DIALOGEX 0, 0, 285, 241
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Log"
+FONT 9, "??", 400, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "Log file browser",IDC_BUTTON1,201,219,77,14
+    EDITTEXT        IDC_EDIT1,7,7,271,206,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_VSCROLL | WS_HSCROLL
+END
+
+IDD_PAGET_RESTORE DIALOGEX 0, 0, 291, 241
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Reduction/Initialization"
+FONT 9, "??", 400, 0, 0x0
+BEGIN
+    PUSHBUTTON      "...",IDC_BUTTON1,253,191,20,14
+    DEFPUSHBUTTON   "Restore Database",IDOK,196,211,84,14
+    GROUPBOX        "Restore File",IDC_STATIC,7,177,280,55
+    EDITTEXT        IDC_EDIT4,54,191,199,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Path:",IDC_STATIC,20,193,25,8
+    EDITTEXT        IDC_EDIT9,66,15,219,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT1,66,31,219,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT5,66,48,219,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT6,66,65,219,14,ES_PASSWORD | ES_AUTOHSCROLL
+    GROUPBOX        "Database Info",IDC_STATIC,7,2,281,85
+    LTEXT           "Database:",IDC_STATIC,7,33,41,8
+    LTEXT           "UserName:",IDC_STATIC,7,51,41,8
+    LTEXT           "Password:",IDC_STATIC,7,66,34,8
+    LTEXT           "Server:",IDC_STATIC,7,17,32,8
+    PUSHBUTTON      "...",IDC_BUTTON3,253,102,20,14
+    GROUPBOX        "Initialization File",IDC_STATIC,7,89,280,84
+    EDITTEXT        IDC_EDIT10,54,102,199,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Path:",IDC_STATIC,7,104,25,8
+    DEFPUSHBUTTON   "Initialize Database",IDOK2,198,155,84,14
+    EDITTEXT        IDC_EDIT2,54,119,219,30,ES_MULTILINE | ES_AUTOVSCROLL | ES_READONLY | ES_WANTRETURN | WS_VSCROLL
+    LTEXT           "Explain:",IDC_STATIC,7,119,37,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 163
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+
+    IDD_PAGE_BACKUP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        TOPMARGIN, 11
+        BOTTOMMARGIN, 233
+    END
+
+    IDD_PAGE_LOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 278
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 234
+    END
+
+    IDD_PAGET_RESTORE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 285
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 233
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_PAGE_BACKUP DLGINIT
+BEGIN
+    IDC_ComboWeek, 0x403, 7, 0
+0x7553, 0x646e, 0x7961, "\000" 
+    IDC_ComboWeek, 0x403, 7, 0
+0x6f4d, 0x646e, 0x7961, "\000" 
+    IDC_ComboWeek, 0x403, 8, 0
+0x7554, 0x7365, 0x6164, 0x0079, 
+    IDC_ComboWeek, 0x403, 10, 0
+0x6557, 0x6e64, 0x7365, 0x6164, 0x0079, 
+    IDC_ComboWeek, 0x403, 9, 0
+0x6854, 0x7275, 0x6164, 0x2079, "\000" 
+    IDC_ComboWeek, 0x403, 7, 0
+0x7246, 0x6469, 0x7961, "\000" 
+    IDC_ComboWeek, 0x403, 10, 0
+0x6153, 0x7574, 0x6472, 0x7961, 0x0020, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "About DbBackupConfig(&A)..."
+    IDS_STRING_Cancel       "Cancel"
+    IDS_STRINGBackupAndRestore "Database Backup/Restore"
+    IDS_STRING_ExpainTex    "The path is the path of the file *.mdf and *.ldf,Use this when using the COPY file for the transfer of the database between two machines.\nIt is recommended that the two files be copied to a DATA directory under MSSQLSERVER?\r\nSql Server Path \r\n $:\\Program Files\\Microsoft SQL Server\\MSSQL\\Data"
+    IDS_STRING_Db_ConnetFailed "Database connect failed!"
+    IDS_STRING_Test_Dbversion_failed "Test Database Version failed"
+    IDS_STRING_Tip          "Prompt"
+    IDS_STRING_Text1        "Please enter the database configuration item"
+    IDS_STRING_Path         "Path"
+    IDS_STRING_Text2        "Specify the database restore file."
+    IDS_STRING_Text3        "When the database is restored, the connection to this database will be broken and whether to continue?"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STRING_Text4        "The database does not have SP4 patches!"
+    IDS_STRING_Text5        "The system detects that the database on the database server already exists.\nIt is recommended that you back up the database and then do more. Will it continue?????“?”,???????????“C:\\”??,The database will then be reinstalled and the original data will be deleted!\n""If ""no"" is selected, the system will continue to use the existing database and the original data will be retained."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_STRING_Db_Bakup_Failed 
+                            "Backup the existing database ""%s"" to ""%s"" failed!"
+    IDS_STRING_CreateDB_Failed "Failed to create database(%s)!"
+    IDS_STRING_Restore_DB_Failed "From ""%s"" restore database ""%s"" failed!"
+    IDS_STRING_Restore_DB_Suc "Restore database ""%s"" from ""%s"" Sucess!"
+    IDS_STRING_CreateDBbyScript 
+                            "From script file ""%s"" Create database ""%s"" failed!"
+    IDS_STRING_CreateDBbyScriptSucess 
+                            "From script file ""%s"" Create database ""%s"" Sucess!"
+    IDS_STRING_BakUpFileNotExit "Backup database :""%s"" does not exist!"
+    IDS_STRING_Db_Bakup_Sucess "Backup database :""%s"" to ""%s"" success."
+    IDS_STRING_Choose_Folder "Choose Folder"
+END
+
+#endif    // Ó¢Óï(ÃÀ¹ú) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+LANGUAGE 4, 2
+#pragma code_page(936)
+#include "res\DbBackupConfig.rc2"  // ·Ç Microsoft Visual C++ ±à¼­µÄ×ÊÔ´
+#include "l.CHS\afxres.rc"      // ±ê×¼×é¼þ
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
